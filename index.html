@@ -646,11 +646,19 @@ let MODULES=[
 let CURRICULUM_ROLE='practitioner';
 
 let DB={
-  users:{admin:{name:'Admin',pass:'admin123',role:'admin',joined:new Date().toISOString().slice(0,10),lastLogin:'',progress:{}}},
+  users:{},
   sheetUrl:localStorage.getItem(SHEET_URL_KEY)||'',
   currentUser:null,currentModule:null,
-  quiz:{moduleId:'',questions:[],idx:0,answers:[],answered:false}
+  quiz:{moduleId:'',questions:[],idx:0,answers:[],answered:false},
+  syncing:false
 };
+
+// Seed admin only if no sheet connected
+function seedLocalAdmin(){
+  if(!DB.sheetUrl && !DB.users['admin']){
+    DB.users['admin']={name:'Admin',pass:'admin123',role:'admin',email:'',joined:new Date().toISOString().slice(0,10),lastLogin:'',progress:{}};
+  }
+}
 
 function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 
@@ -668,47 +676,153 @@ function injectLogos(){
   });
 }
 
+
+async function loadProgressFromSheet(username){
+  if(!DB.sheetUrl)return;
+  try{
+    const res=await fetch(DB.sheetUrl,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'GET_PROGRESS',username})});
+    const data=await res.json();
+    if(data.status==='ok'&&data.progress){
+      if(DB.users[username])DB.users[username].progress=data.progress;
+    }
+  }catch(e){}
+}
+
+async function saveProgressToSheet(username){
+  if(!DB.sheetUrl||!DB.users[username])return;
+  try{
+    await fetch(DB.sheetUrl,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'SAVE_PROGRESS',username,progress:DB.users[username].progress})});
+  }catch(e){}
+}
+
+async function loadAllUsersFromSheet(){
+  if(!DB.sheetUrl)return;
+  try{
+    const res=await fetch(DB.sheetUrl,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'GET_ALL_USERS'})});
+    const data=await res.json();
+    if(data.status==='ok'&&data.users){
+      data.users.forEach(u=>{
+        DB.users[u.username]={name:u.name,pass:'••••••',role:u.role,email:u.email||'',joined:u.joined,lastLogin:u.lastLogin||'',progress:u.progress||{}};
+      });
+    }
+  }catch(e){}
+}
+
 async function syncSheet(action,payload){
   if(!DB.sheetUrl)return false;
-  try{await fetch(DB.sheetUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...payload})});return true;}
-  catch(e){return false;}
+  try{
+    const res=await fetch(DB.sheetUrl,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...payload})});
+    const data=await res.json();
+    return data.status==='ok';
+  }catch(e){
+    try{await fetch(DB.sheetUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...payload})});return true;}
+    catch(e2){return false;}
+  }
 }
 
-function connectSheet(){
+async function connectSheet(){
   const url=document.getElementById('sheet-url').value.trim();
   const err=document.getElementById('sheet-err');const ok=document.getElementById('sheet-ok');
+  const btn=document.querySelector('.sheets-row button');
   if(!url.includes('script.google.com')){err.textContent='Please enter a valid Apps Script URL.';ok.innerHTML='';return;}
   DB.sheetUrl=url;localStorage.setItem(SHEET_URL_KEY,url);
-  err.textContent='';
-  ok.innerHTML='<div class="connected-pill"><div class="dot-live"></div>Connected to Google Sheets</div>';
-  syncSheet('PING',{}).then(()=>toast('Google Sheets connected!'));
+  err.textContent='';btn.textContent='Connecting...';btn.disabled=true;
+  try{
+    const res=await fetch(url,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'PING'})});
+    const data=await res.json();
+    btn.textContent='Connect';btn.disabled=false;
+    if(data.status==='ok'){
+      ok.innerHTML='<div class="connected-pill"><div class="dot-live"></div>Connected to Google Sheets</div>';
+      toast('Google Sheets connected!');
+    }
+  }catch(e){
+    btn.textContent='Connect';btn.disabled=false;
+    // Try no-cors as fallback
+    await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'PING'})});
+    ok.innerHTML='<div class="connected-pill"><div class="dot-live"></div>Connected to Google Sheets</div>';
+    toast('Google Sheets connected!');
+  }
 }
 
-function doLogin(){
+async function doLogin(){
   const u=document.getElementById('l-user').value.trim();
   const p=document.getElementById('l-pass').value;
   const err=document.getElementById('l-err');
+  const btn=document.querySelector('#s-login .btn-primary');
   if(!u||!p){err.textContent='Please enter username and password.';return;}
-  const user=DB.users[u];
-  if(!user||user.pass!==p){err.textContent='Invalid username or password.';return;}
-  err.textContent='';user.lastLogin=new Date().toLocaleString();DB.currentUser=u;
-  syncSheet('LOGIN',{username:u,name:user.name,role:user.role,timestamp:user.lastLogin});
-  loadDash();
+  
+  // If sheet connected, verify against Google Sheets
+  if(DB.sheetUrl){
+    err.textContent='';
+    btn.textContent='Signing in...';btn.disabled=true;
+    try {
+      const res=await fetch(DB.sheetUrl,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'LOGIN',username:u,password:p})});
+      const data=await res.json();
+      btn.textContent='Sign in';btn.disabled=false;
+      if(data.status==='ok'){
+        DB.users[u]={name:data.user.name,pass:p,role:data.user.role,email:data.user.email||'',joined:data.user.joined,lastLogin:new Date().toLocaleString(),progress:{}};
+        DB.currentUser=u;
+        // Load progress from sheets
+        await loadProgressFromSheet(u);
+        loadDash();
+      } else if(data.status==='invalid'){
+        err.textContent='Invalid username or password.';
+      } else {
+        err.textContent='Connection error. Please try again.';
+      }
+    } catch(e){
+      btn.textContent='Sign in';btn.disabled=false;
+      // Fallback to local if fetch fails
+      seedLocalAdmin();
+      const user=DB.users[u];
+      if(!user||user.pass!==p){err.textContent='Invalid username or password.';return;}
+      DB.currentUser=u;loadDash();
+    }
+  } else {
+    // No sheet — local only
+    seedLocalAdmin();
+    const user=DB.users[u];
+    if(!user||user.pass!==p){err.textContent='Invalid username or password.';return;}
+    err.textContent='';user.lastLogin=new Date().toLocaleString();DB.currentUser=u;
+    loadDash();
+  }
 }
 
-function doRegister(){
+async function doRegister(){
   const name=document.getElementById('r-name').value.trim();
   const u=document.getElementById('r-user').value.trim();
   const pass=document.getElementById('r-pass').value;
   const role=document.getElementById('r-role').value;
   const err=document.getElementById('r-err');
+  const btn=document.querySelector('#s-register .btn-primary');
   if(!name||!u||!pass){err.textContent='All fields required.';return;}
   if(pass.length<6){err.textContent='Password must be 6+ characters.';return;}
-  if(DB.users[u]){err.textContent='Username already taken.';return;}
-  DB.users[u]={name,pass,role,joined:new Date().toISOString().slice(0,10),lastLogin:'',progress:{}};
-  DB.currentUser=u;
-  syncSheet('REGISTER',{username:u,name,role,joined:DB.users[u].joined});
-  loadDash();
+
+  if(DB.sheetUrl){
+    btn.textContent='Creating account...';btn.disabled=true;
+    try {
+      const joined=new Date().toISOString().slice(0,10);
+      const res=await fetch(DB.sheetUrl,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'REGISTER',username:u,name,role,password:pass,email:'',joined})});
+      const data=await res.json();
+      btn.textContent='Create account';btn.disabled=false;
+      if(data.status==='ok'){
+        DB.users[u]={name,pass,role,email:'',joined,lastLogin:'',progress:{}};
+        DB.currentUser=u;loadDash();
+      } else if(data.status==='taken'){
+        err.textContent='Username already taken.';
+      } else {
+        err.textContent='Error creating account. Please try again.';
+      }
+    } catch(e){
+      btn.textContent='Create account';btn.disabled=false;
+      err.textContent='Connection error. Please try again.';
+    }
+  } else {
+    if(DB.users[u]){err.textContent='Username already taken.';return;}
+    const joined=new Date().toISOString().slice(0,10);
+    DB.users[u]={name,pass,role,email:'',joined,lastLogin:'',progress:{}};
+    DB.currentUser=u;loadDash();
+  }
 }
 
 function doLogout(){DB.currentUser=null;document.getElementById('l-user').value='';document.getElementById('l-pass').value='';go('s-login');}
@@ -940,7 +1054,10 @@ function showResults(){
   const passed=pct>=m.passingScore;
   const user=DB.users[DB.currentUser];
   const prev=user.progress[qz.moduleId];
-  if(!prev||pct>(prev.score||0))user.progress[qz.moduleId]={score:pct,passed,date:new Date().toISOString().slice(0,10)};
+  if(!prev||pct>(prev.score||0)){
+    user.progress[qz.moduleId]={score:pct,passed,date:new Date().toISOString().slice(0,10)};
+    saveProgressToSheet(DB.currentUser);
+  }
   const payload={username:DB.currentUser,name:user.name,role:user.role,module:m.title,score:pct,passed,correct,total,timestamp:new Date().toLocaleString()};
   syncSheet('QUIZ_RESULT',payload).then(synced=>{
     const syncMsg=synced?`<div class="sync-ok">✓ Results saved to Google Sheets</div>`:(DB.sheetUrl?`<div class="sync-warn">Could not sync to Google Sheets.</div>`:`<div class="sync-warn">Connect Google Sheets in the Admin tab to save results permanently.</div>`);
@@ -959,7 +1076,10 @@ function showResults(){
   go('s-results');
 }
 
-function renderAdmin(){
+async function renderAdmin(){
+  if(DB.sheetUrl){
+    await loadAllUsersFromSheet();
+  }
   const users=Object.entries(DB.users);
   const totalMods=MODULES.length;
   const totalPassed=users.reduce((s,[,u])=>s+Object.values(u.progress||{}).filter(p=>p.passed).length,0);
@@ -977,16 +1097,21 @@ function renderAdmin(){
 }
 
 
-function deleteUser(username) {
+async function deleteUser(username) {
   const user = DB.users[username];
   if (!user) return;
   if (!confirm(`Delete user "${user.name}" (@${username})? This cannot be undone.`)) return;
+  if(DB.sheetUrl){
+    try{
+      await fetch(DB.sheetUrl,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'DELETE_USER',username})});
+    }catch(e){}
+  }
   delete DB.users[username];
   renderAdmin();
   toast(`User "${user.name}" deleted`);
 }
 
-function adminAdd(){
+async function adminAdd(){
   const name=document.getElementById('a-name').value.trim();
   const u=document.getElementById('a-user').value.trim();
   const pass=document.getElementById('a-pass').value;
@@ -994,18 +1119,27 @@ function adminAdd(){
   const email=document.getElementById('a-email').value.trim();
   const sendEmail=document.getElementById('a-send-email').checked;
   const err=document.getElementById('a-err');
+  const btn=document.querySelector('.add-btn');
   if(!name||!u||!pass){err.textContent='All fields required.';return;}
-  if(DB.users[u]){err.textContent='Username already exists.';return;}
-  DB.users[u]={name,pass,role,email,joined:new Date().toISOString().slice(0,10),lastLogin:'',progress:{}};
   err.textContent='';
-  ['a-name','a-user','a-pass','a-email'].forEach(id=>document.getElementById(id).value='');
-  syncSheet('ADD_USER',{username:u,name,role,email,password:pass,joined:DB.users[u].joined,sendWelcome:sendEmail&&!!email});
-  renderAdmin();
-  if(email&&sendEmail){
-    toast(`User "${name}" added — welcome email sent to ${email}!`);
-  } else {
-    toast(`User "${name}" added successfully`);
+  const joined=new Date().toISOString().slice(0,10);
+
+  if(DB.sheetUrl){
+    btn.textContent='Adding...';btn.disabled=true;
+    try{
+      const res=await fetch(DB.sheetUrl,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'ADD_USER',username:u,name,role,email,password:pass,joined,sendWelcome:sendEmail&&!!email})});
+      const data=await res.json();
+      btn.textContent='Add user';btn.disabled=false;
+      if(data.status==='taken'){err.textContent='Username already exists.';return;}
+      if(data.status!=='ok'){err.textContent='Error adding user. Please try again.';return;}
+    }catch(e){btn.textContent='Add user';btn.disabled=false;err.textContent='Connection error.';return;}
   }
+
+  DB.users[u]={name,pass,role,email,joined,lastLogin:'',progress:{}};
+  ['a-name','a-user','a-pass','a-email'].forEach(id=>document.getElementById(id).value='');
+  renderAdmin();
+  if(email&&sendEmail){toast(`User "${name}" added — welcome email sent!`);}
+  else{toast(`User "${name}" added successfully`);}
 }
 
 function renderCurriculum(){
@@ -1266,7 +1400,7 @@ function exportContent(){
 }
 
 // Init
-document.addEventListener('DOMContentLoaded',()=>{injectLogos();});
+document.addEventListener('DOMContentLoaded',()=>{injectLogos();seedLocalAdmin();});
 </script>
 </body>
 </html>
