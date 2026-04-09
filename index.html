@@ -435,7 +435,7 @@ input:checked + .toggle-slider:before{transform:translateX(18px);}
         <div class="admin-card-title">All users</div>
         <div style="overflow-x:auto">
         <table class="tbl">
-          <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Email</th><th>Modules passed</th><th>Last login</th></tr></thead>
+          <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Email</th><th>Modules passed</th><th>Last login</th><th></th></tr></thead>
           <tbody id="admin-tbody"></tbody>
         </table>
         </div>
@@ -971,8 +971,19 @@ function renderAdmin(){
   const roleMap={admin:'badge-jade',practitioner:'badge-plum',staff:'badge-amethyst',intern:'badge-gray'};
   document.getElementById('admin-tbody').innerHTML=users.map(([un,u])=>{
     const passed=Object.values(u.progress||{}).filter(p=>p.passed).length;
-    return `<tr><td>${u.name}</td><td style="color:var(--text-muted)">${un}</td><td><span class="badge ${roleMap[u.role]||'badge-gray'}">${u.role}</span></td><td style="color:var(--text-muted);font-size:12px">${u.email||'—'}</td><td>${passed}/${totalMods}</td><td style="color:var(--text-muted);font-size:12px">${u.lastLogin||'—'}</td></tr>`;
+    const isCurrentUser = un === DB.currentUser;
+    return `<tr><td>${u.name}</td><td style="color:var(--text-muted)">${un}</td><td><span class="badge ${roleMap[u.role]||'badge-gray'}">${u.role}</span></td><td style="color:var(--text-muted);font-size:12px">${u.email||'—'}</td><td>${passed}/${totalMods}</td><td style="color:var(--text-muted);font-size:12px">${u.lastLogin||'—'}</td><td>${isCurrentUser?'':'<button class="btn-sm btn-sm-red" onclick="deleteUser(''+un+'')">Delete</button>'}</td></tr>`;
   }).join('');
+}
+
+
+function deleteUser(username) {
+  const user = DB.users[username];
+  if (!user) return;
+  if (!confirm(`Delete user "${user.name}" (@${username})? This cannot be undone.`)) return;
+  delete DB.users[username];
+  renderAdmin();
+  toast(`User "${user.name}" deleted`);
 }
 
 function adminAdd(){
