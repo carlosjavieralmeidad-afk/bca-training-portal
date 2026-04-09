@@ -653,9 +653,9 @@ let DB={
   syncing:false
 };
 
-// Seed admin only if no sheet connected
+// Always seed local admin account so it works regardless of sheet status
 function seedLocalAdmin(){
-  if(!DB.sheetUrl && !DB.users['admin']){
+  if(!DB.users['admin']){
     DB.users['admin']={name:'Admin',pass:'admin123',role:'admin',email:'',joined:new Date().toISOString().slice(0,10),lastLogin:'',progress:{}};
   }
 }
@@ -752,7 +752,7 @@ async function doLogin(){
   if(!u||!p){err.textContent='Please enter username and password.';return;}
   err.textContent='';
 
-  // Always allow local admin login first (no sheet needed)
+  // Step 1: Always try local users first (includes admin)
   seedLocalAdmin();
   if(DB.users[u]&&DB.users[u].pass===p){
     DB.users[u].lastLogin=new Date().toLocaleString();
@@ -761,7 +761,7 @@ async function doLogin(){
     return;
   }
 
-  // If sheet connected, verify against Google Sheets
+  // Step 2: If sheet connected, try Google Sheets login
   if(DB.sheetUrl){
     btn.textContent='Signing in...';btn.disabled=true;
     try {
@@ -779,11 +779,13 @@ async function doLogin(){
       }
     } catch(e){
       btn.textContent='SIGN IN';btn.disabled=false;
-      err.textContent='Could not connect to server. Please check your connection.';
+      // If sheet fails, still show error since user wasn't found locally
+      err.textContent='Invalid username or password. If you just registered, please try again in a moment.';
       return;
     }
   }
 
+  // Step 3: Not found anywhere
   err.textContent='Invalid username or password.';
 }
 
