@@ -1103,7 +1103,7 @@ function showResults() {
     timestamp: new Date().toLocaleString()
   });
 
-  const syncMsg = STATE.sheetUrl
+  const syncMsg = getSheetUrl()
     ? '<div class="sync-ok">✓ Results saved to Google Sheets</div>'
     : '<div class="sync-warn">Connect Google Sheets in Admin to save results permanently.</div>';
 
