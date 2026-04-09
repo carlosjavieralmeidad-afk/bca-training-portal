@@ -6,438 +6,382 @@
 <title>bee·cave — Practitioner Training</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --plum: #5C3359;
-  --amethyst: #6F597E;
-  --lavender: #CDC7D1;
-  --lavender-light: #EAE6EC;
-  --lavender-pale: #F5F3F6;
-  --jade: #ACB785;
-  --jade-dark: #8a9466;
-  --white: #FFFFFF;
-  --text: #3a2440;
-  --text-muted: #7a6882;
-  --text-light: #a593ae;
-  --border: rgba(92,51,89,0.1);
-  --border-med: rgba(92,51,89,0.18);
-  --shadow: 0 2px 8px rgba(92,51,89,0.08), 0 8px 24px rgba(92,51,89,0.06);
-  --shadow-sm: 0 1px 3px rgba(92,51,89,0.08);
-  --radius: 14px;
-  --radius-sm: 8px;
+:root{
+  --plum:#5C3359;--amethyst:#6F597E;--lavender:#CDC7D1;
+  --lav-light:#EAE6EC;--lav-pale:#F5F3F6;
+  --jade:#ACB785;--jade-dk:#8a9466;
+  --white:#fff;--text:#3a2440;--muted:#7a6882;--light:#a593ae;
+  --border:rgba(92,51,89,0.1);--border-md:rgba(92,51,89,0.18);
+  --shadow:0 2px 8px rgba(92,51,89,0.08),0 8px 24px rgba(92,51,89,0.06);
+  --shadow-sm:0 1px 3px rgba(92,51,89,0.08);
+  --r:14px;--r-sm:8px;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Montserrat',sans-serif;background:var(--lavender-pale);color:var(--text);min-height:100vh;}
-h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:700;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Montserrat',sans-serif;background:var(--lav-pale);color:var(--text);min-height:100vh}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:700}
+.screen{display:none;min-height:100vh}.screen.active{display:block}
 
-/* SCREENS */
-.screen{display:none;min-height:100vh;}.screen.active{display:block;}
+/* ── AUTH ── */
+.auth-bg{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;background:linear-gradient(135deg,var(--lav-pale),#e8e0ec)}
+.auth-box{width:100%;max-width:440px}
+.auth-top{text-align:center;margin-bottom:2rem}
+.auth-top h1{font-size:26px;color:var(--plum)}
+.auth-top h1 span{color:var(--jade-dk)}
+.auth-top p{font-size:12px;font-weight:600;color:var(--amethyst);letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
+.card{background:var(--white);border-radius:var(--r);border:1px solid var(--border);padding:2.25rem;box-shadow:var(--shadow)}
+.card h2{font-size:22px;color:var(--plum);margin-bottom:1.5rem}
+.field{margin-bottom:1rem}
+.field label{font-size:11px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.07em}
+.field input,.field select,.field textarea{width:100%;padding:10px 14px;font-size:14px;font-family:'Montserrat',sans-serif;border:1.5px solid var(--border-md);border-radius:var(--r-sm);background:var(--lav-pale);color:var(--text);outline:none;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--amethyst);box-shadow:0 0 0 3px rgba(111,89,126,.12)}
+.field textarea{min-height:72px;resize:vertical;line-height:1.5}
+.btn{width:100%;padding:12px;font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:.06em;text-transform:uppercase;border:none;border-radius:var(--r-sm);cursor:pointer;transition:background .15s}
+.btn-plum{background:var(--plum);color:#fff}.btn-plum:hover{background:var(--amethyst)}
+.btn-ghost{background:transparent;color:var(--plum);border:1.5px solid var(--border-md);margin-top:8px}.btn-ghost:hover{background:var(--lav-pale)}
+.btn-sm{padding:6px 13px;font-size:11px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:.04em;text-transform:uppercase;border-radius:var(--r-sm);cursor:pointer;border:none}
+.bs-plum{background:var(--plum);color:#fff}.bs-plum:hover{background:var(--amethyst)}
+.bs-red{background:#fdf0f4;color:#8b2252;border:1px solid #f0c0d4}.bs-red:hover{background:#f8dce8}
+.bs-gray{background:var(--lav-pale);color:var(--muted);border:1px solid var(--border-md)}
+.link-row{text-align:center;margin-top:1.25rem;font-size:13px;color:var(--muted)}
+.lnk{color:var(--amethyst);font-weight:600;background:none;border:none;cursor:pointer;font-size:13px;font-family:'Montserrat',sans-serif}
+.err-msg{font-size:12px;color:#8b2252;margin-top:8px;min-height:18px}
 
-/* AUTH */
-.auth-bg{min-height:100vh;background:linear-gradient(135deg,var(--lavender-pale) 0%,#e8e0ec 100%);display:flex;align-items:center;justify-content:center;padding:2rem;}
-.auth-box{width:100%;max-width:440px;}
-.auth-logo-area{text-align:center;margin-bottom:2rem;}
-.bca-logo-svg{width:70px;height:70px;margin:0 auto 1rem;}
-.auth-logo-area h1{font-size:26px;color:var(--plum);margin-bottom:3px;}
-.auth-logo-area h1 span{color:var(--jade-dark);}
-.auth-logo-area p{font-size:12px;font-weight:600;color:var(--amethyst);letter-spacing:0.12em;text-transform:uppercase;}
-.auth-card{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);padding:2.25rem;box-shadow:var(--shadow);}
-.auth-card h2{font-size:22px;color:var(--plum);margin-bottom:1.5rem;}
-.field{margin-bottom:1rem;}
-.field label{font-size:11px;font-weight:600;color:var(--text-muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.07em;}
-.field input,.field select,.field textarea{width:100%;padding:10px 14px;font-size:14px;font-family:'Montserrat',sans-serif;border:1.5px solid var(--border-med);border-radius:var(--radius-sm);background:var(--lavender-pale);color:var(--text);outline:none;transition:border-color 0.15s;}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--amethyst);box-shadow:0 0 0 3px rgba(111,89,126,0.12);}
-.field textarea{min-height:72px;resize:vertical;line-height:1.5;}
-.btn-primary{width:100%;padding:12px;font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;text-transform:uppercase;background:var(--plum);color:white;border:none;border-radius:var(--radius-sm);cursor:pointer;transition:background 0.15s;margin-top:4px;}
-.btn-primary:hover{background:var(--amethyst);}
-.btn-ghost{width:100%;padding:11px;font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:0.04em;text-transform:uppercase;background:transparent;color:var(--plum);border:1.5px solid var(--border-med);border-radius:var(--radius-sm);cursor:pointer;margin-top:8px;}
-.btn-ghost:hover{background:var(--lavender-pale);}
-.btn-sm{padding:6px 14px;font-size:11px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:0.05em;text-transform:uppercase;border-radius:var(--radius-sm);cursor:pointer;border:none;}
-.btn-sm-plum{background:var(--plum);color:white;}.btn-sm-plum:hover{background:var(--amethyst);}
-.btn-sm-jade{background:var(--jade);color:#3a3a2a;}.btn-sm-jade:hover{background:var(--jade-dark);color:white;}
-.btn-sm-red{background:#fdf0f4;color:#8b2252;border:1px solid #f0c0d4;}.btn-sm-red:hover{background:#f8dce8;}
-.btn-sm-gray{background:var(--lavender-pale);color:var(--text-muted);border:1px solid var(--border-med);}
-.link-row{text-align:center;margin-top:1.25rem;font-size:13px;color:var(--text-muted);}
-.link-btn{color:var(--amethyst);font-weight:600;background:none;border:none;cursor:pointer;font-size:13px;font-family:'Montserrat',sans-serif;}
-.err{font-size:12px;color:#8b2252;margin-top:8px;min-height:18px;}
+/* ── TOP BAR ── */
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 1.5rem;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.tb-left{display:flex;align-items:center;gap:12px}
+.tb-logo{width:36px;height:36px}
+.tb-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--plum)}
+.tb-title span{color:var(--jade-dk)}
+.tb-right{display:flex;align-items:center;gap:10px}
+.tb-user{font-size:12px;color:var(--muted);font-weight:500}
+.badge{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.b-plum{background:#f0e8f4;color:var(--plum)}
+.b-jade{background:#f0f2e8;color:var(--jade-dk)}
+.b-ameth{background:#ede8f2;color:var(--amethyst)}
+.b-gray{background:var(--lav-light);color:var(--muted)}
+.b-red{background:#fdf0f4;color:#8b2252}
+.logout{font-size:12px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;background:none;border:1.5px solid var(--border-md);border-radius:var(--r-sm);padding:5px 12px;color:var(--muted)}
+.logout:hover{border-color:var(--plum);color:var(--plum)}
+.tabs{background:var(--white);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;gap:2px;overflow-x:auto}
+.tab{padding:14px 16px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-bottom:2.5px solid transparent;color:var(--muted);white-space:nowrap;transition:all .12s}
+.tab:hover{color:var(--plum)}.tab.active{color:var(--plum);border-bottom-color:var(--plum)}
+.content{padding:2rem 1.5rem;max-width:1120px;margin:0 auto}
+.sec-lbl{font-size:10px;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
 
-/* TOPBAR */
-.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 1.5rem;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 0 var(--border);}
-.topbar-left{display:flex;align-items:center;gap:12px;}
-.topbar-icon{width:36px;height:36px;}
-.topbar-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--plum);}
-.topbar-title span{color:var(--jade-dark);}
-.topbar-right{display:flex;align-items:center;gap:10px;}
-.topbar-user{font-size:12px;color:var(--text-muted);font-weight:500;}
-.badge{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;}
-.badge-plum{background:#f0e8f4;color:var(--plum);}
-.badge-jade{background:#f0f2e8;color:var(--jade-dark);}
-.badge-amethyst{background:#ede8f2;color:var(--amethyst);}
-.badge-gray{background:var(--lavender-light);color:var(--text-muted);}
-.badge-red{background:#fdf0f4;color:#8b2252;}
-.topbar-logout{font-size:12px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;background:none;border:1.5px solid var(--border-med);border-radius:var(--radius-sm);padding:5px 12px;color:var(--text-muted);}
-.topbar-logout:hover{border-color:var(--plum);color:var(--plum);}
+/* ── LEARNING PATH ── */
+.path-intro{margin-bottom:1.5rem}
+.path-intro h2{font-size:24px;color:var(--plum);margin-bottom:6px}
+.path-intro p{font-size:14px;color:var(--muted);line-height:1.6}
+.path-item{display:flex;align-items:stretch;gap:0}
+.path-line{display:flex;flex-direction:column;align-items:center;width:48px;flex-shrink:0}
+.path-dot{width:18px;height:18px;border-radius:50%;border:3px solid var(--plum);background:var(--white);flex-shrink:0;z-index:1;margin-top:24px}
+.path-dot.done{background:var(--plum)}.path-dot.avail{border-color:var(--jade)}.path-dot.locked{border-color:var(--lavender);background:var(--lav-light)}
+.path-conn{flex:1;width:2px;background:var(--lavender);margin:0 auto}
+.path-card-wrap{flex:1;padding:10px 0 20px}
+.path-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);padding:1.25rem 1.5rem;cursor:pointer;transition:all .15s;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+.path-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--plum)}
+.path-card.done::before{background:var(--jade)}.path-card.avail::before{background:var(--jade)}.path-card.locked::before{background:var(--lavender)}
+.path-card.locked{cursor:default;opacity:.65;background:var(--lav-pale)}
+.path-card:not(.locked):hover{border-color:var(--amethyst);box-shadow:0 4px 20px rgba(92,51,89,.12);transform:translateX(2px)}
+.pc-top{display:flex;align-items:center;gap:14px}
+.pc-ord{width:22px;height:22px;border-radius:50%;background:var(--plum);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pc-ord.done{background:var(--jade-dk)}.pc-ord.locked{background:var(--lavender)}
+.pc-icon{width:42px;height:42px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.pc-info{flex:1}
+.pc-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--plum);margin-bottom:3px}
+.pc-desc{font-size:12px;color:var(--muted);line-height:1.5}
+.pc-meta{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.prog-bar{height:3px;border-radius:2px;background:var(--lav-light);overflow:hidden;margin-top:10px}
+.prog-fill{height:100%;border-radius:2px;background:var(--jade);transition:width .4s}
 
-/* TABS */
-.tabs{background:var(--white);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;gap:2px;overflow-x:auto;}
-.tab{padding:14px 16px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;border-bottom:2.5px solid transparent;color:var(--text-muted);white-space:nowrap;transition:all 0.12s;}
-.tab:hover{color:var(--plum);}
-.tab.active{color:var(--plum);border-bottom-color:var(--plum);}
+/* ── MODULE DETAIL ── */
+.back{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);cursor:pointer;background:none;border:none;font-family:'Montserrat',sans-serif;padding:0;margin-bottom:1.5rem}
+.back:hover{color:var(--plum)}
+.mod-hdr{display:flex;align-items:flex-start;gap:20px;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.mod-hdr-icon{width:60px;height:60px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.mod-hdr h2{font-size:28px;color:var(--plum);margin-bottom:6px}
+.mod-hdr p{font-size:14px;color:var(--muted);line-height:1.6}
+.video-box{background:#1a0a1e;border-radius:var(--r);overflow:hidden;position:relative;padding-top:56.25%;margin-bottom:2rem;box-shadow:var(--shadow)}
+.video-box iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.vid-ph{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.vid-ph svg{width:56px;height:56px;fill:#4a2a4e}
+.vid-ph p{font-size:14px;color:#8a6890;font-weight:500}
+.vid-ph small{font-size:12px;color:#5a3a5e}
+.res-list{display:flex;flex-direction:column;gap:10px;margin-bottom:2rem}
+.res-item{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);box-shadow:var(--shadow-sm)}
+.res-ico{width:36px;height:36px;border-radius:var(--r-sm);background:var(--lav-light);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.res-name{font-size:13px;font-weight:600;color:var(--plum)}
+.res-type{font-size:11px;color:var(--muted)}
+.res-dl{font-size:12px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:.04em;text-transform:uppercase;color:var(--amethyst);cursor:pointer;background:none;border:none;padding:6px 12px;border-radius:var(--r-sm)}
+.res-dl:hover{background:var(--lav-light)}
+.quiz-start{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;background:var(--plum);color:#fff;border-radius:var(--r-sm);font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:none;width:100%}
+.quiz-start:hover{background:var(--amethyst)}
+.quiz-note{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
 
-/* CONTENT */
-.content{padding:2rem 1.5rem;max-width:1120px;margin:0 auto;}
-.section-label{font-size:10px;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;}
+/* ── QUIZ ── */
+.q-wrap{max-width:680px;margin:0 auto}
+.q-prog{display:flex;align-items:center;gap:14px;margin-bottom:2rem}
+.q-prog-bar{flex:1;height:6px;background:var(--lav-light);border-radius:3px;overflow:hidden}
+.q-prog-fill{height:100%;border-radius:3px;background:var(--plum);transition:width .35s}
+.q-prog-txt{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.q-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:2rem;box-shadow:var(--shadow-sm)}
+.q-num{font-size:10px;font-weight:600;color:var(--amethyst);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.q-text{font-family:'Playfair Display',serif;font-size:20px;color:var(--plum);line-height:1.4;margin-bottom:1.5rem}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;border:1.5px solid var(--border-md);border-radius:var(--r-sm);cursor:pointer;transition:all .12s}
+.opt:hover{border-color:var(--amethyst);background:var(--lav-pale)}
+.opt.sel,.opt.correct{border-color:var(--plum);background:#f0e8f4}
+.opt.wrong{border-color:#c0507a;background:#fdf0f4}
+.opt-ltr{width:26px;height:26px;border-radius:50%;border:2px solid var(--lavender);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;color:var(--muted)}
+.opt.sel .opt-ltr,.opt.correct .opt-ltr{border-color:var(--plum);background:var(--plum);color:#fff}
+.opt.wrong .opt-ltr{border-color:#c0507a;background:#c0507a;color:#fff}
+.opt-txt{font-size:14px;color:var(--text);line-height:1.5;padding-top:3px}
+.fb{padding:12px 16px;border-radius:var(--r-sm);font-size:13px;margin-top:14px;line-height:1.6;font-weight:500}
+.fb-ok{background:#f0f2e8;color:#5a6a30}.fb-err{background:#fdf0f4;color:#8b2252}
+.q-nav{display:flex;justify-content:flex-end;margin-top:1.5rem;max-width:680px;margin-left:auto;margin-right:auto}
+.q-next{padding:11px 28px;font-size:12px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:.07em;text-transform:uppercase;background:var(--plum);color:#fff;border:none;border-radius:var(--r-sm);cursor:pointer}
+.q-next:disabled{opacity:.4;cursor:default}.q-next:not(:disabled):hover{background:var(--amethyst)}
 
-/* LEARNING PATH */
-.path-intro{margin-bottom:1.5rem;}
-.path-intro h2{font-size:24px;color:var(--plum);margin-bottom:6px;}
-.path-intro p{font-size:14px;color:var(--text-muted);line-height:1.6;}
-.path-grid{display:flex;flex-direction:column;gap:0;}
-.path-item{display:flex;gap:0;align-items:stretch;}
-.path-line-col{display:flex;flex-direction:column;align-items:center;width:48px;flex-shrink:0;}
-.path-dot{width:18px;height:18px;border-radius:50%;border:3px solid var(--plum);background:var(--white);flex-shrink:0;z-index:1;margin-top:24px;}
-.path-dot.done{background:var(--plum);}
-.path-dot.locked{border-color:var(--lavender);background:var(--lavender-light);}
-.path-dot.available{border-color:var(--jade);background:var(--white);}
-.path-connector{flex:1;width:2px;background:var(--lavender);margin:0 auto;}
-.path-card-wrap{flex:1;padding:10px 0 20px 0;}
-.path-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
-.path-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--plum);}
-.path-card.locked{cursor:default;opacity:0.6;background:var(--lavender-pale);}
-.path-card.locked::before{background:var(--lavender);}
-.path-card.done::before{background:var(--jade);}
-.path-card.available::before{background:var(--jade);}
-.path-card:not(.locked):hover{border-color:var(--amethyst);box-shadow:0 4px 20px rgba(92,51,89,0.12);transform:translateX(2px);}
-.path-card-top{display:flex;align-items:center;gap:14px;}
-.path-card-icon{width:42px;height:42px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
-.path-card-info{flex:1;}
-.path-card-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--plum);margin-bottom:3px;}
-.path-card-desc{font-size:12px;color:var(--text-muted);line-height:1.5;}
-.path-card-meta{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap;}
-.lock-icon{font-size:16px;color:var(--text-light);}
-.path-prog-bar{height:3px;border-radius:2px;background:var(--lavender-light);overflow:hidden;margin-top:10px;}
-.path-prog-fill{height:100%;border-radius:2px;background:var(--jade);transition:width 0.4s;}
-.order-badge{font-size:10px;font-weight:700;color:var(--white);background:var(--plum);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.order-badge.done{background:var(--jade-dark);}
-.order-badge.locked{background:var(--lavender);}
+/* ── RESULTS ── */
+.res-wrap{max-width:500px;margin:3rem auto;text-align:center}
+.score-ring{width:130px;height:130px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.75rem;border:4px solid var(--plum);background:#f0e8f4}
+.score-ring.fail{border-color:#c0507a;background:#fdf0f4}
+.score-num{font-family:'Playfair Display',serif;font-size:38px;color:var(--plum)}
+.score-ring.fail .score-num{color:#8b2252}
+.score-lbl{font-size:11px;color:var(--amethyst);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.score-ring.fail .score-lbl{color:#c0507a}
+.res-title{font-size:28px;color:var(--plum);margin-bottom:10px}
+.res-sub{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:2rem}
+.res-actions{display:flex;flex-direction:column;gap:10px}
+.sync-ok{font-size:12px;color:var(--jade-dk);margin-bottom:1rem;font-weight:600}
+.sync-warn{font-size:12px;color:#8a6020;background:#fef8ec;padding:8px 14px;border-radius:var(--r-sm);margin-bottom:1rem}
 
-/* MODULE DETAIL */
-.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;background:none;border:none;font-family:'Montserrat',sans-serif;padding:0;margin-bottom:1.5rem;}
-.back-btn:hover{color:var(--plum);}
-.mod-header{display:flex;align-items:flex-start;gap:20px;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
-.mod-header-icon{width:60px;height:60px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
-.mod-header-text h2{font-size:28px;color:var(--plum);margin-bottom:6px;}
-.mod-header-text p{font-size:14px;color:var(--text-muted);line-height:1.6;}
-.video-box{background:#1a0a1e;border-radius:var(--radius);overflow:hidden;position:relative;padding-top:56.25%;margin-bottom:2rem;box-shadow:var(--shadow);}
-.video-box iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
-.video-placeholder{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
-.video-placeholder svg{width:56px;height:56px;fill:#4a2a4e;}
-.video-placeholder p{font-size:14px;color:#8a6890;font-weight:500;}
-.video-placeholder small{font-size:12px;color:#5a3a5e;}
-.resources-list{display:flex;flex-direction:column;gap:10px;margin-bottom:2rem;}
-.res-item{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);}
-.res-icon{width:36px;height:36px;border-radius:var(--radius-sm);background:var(--lavender-light);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.res-info{flex:1;}
-.res-name{font-size:13px;font-weight:600;color:var(--plum);}
-.res-type{font-size:11px;color:var(--text-muted);}
-.res-dl{font-size:12px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:0.04em;text-transform:uppercase;color:var(--amethyst);cursor:pointer;background:none;border:none;padding:6px 12px;border-radius:var(--radius-sm);}
-.res-dl:hover{background:var(--lavender-light);}
-.start-quiz-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;background:var(--plum);color:white;border-radius:var(--radius-sm);font-size:13px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;border:none;width:100%;}
-.start-quiz-btn:hover{background:var(--amethyst);}
-.quiz-note{font-size:12px;color:var(--text-muted);text-align:center;margin-top:10px;}
+/* ── CERTIFICATE ── */
+.cert-card{background:var(--white);border:2px solid var(--lavender);border-radius:var(--r);padding:3rem;text-align:center;box-shadow:var(--shadow);max-width:680px;margin:0 auto}
+.cert-card h3{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--amethyst);margin-bottom:8px}
+.cert-card h2{font-size:32px;color:var(--plum)}
+.cert-name{font-size:22px;color:var(--amethyst);margin:1rem 0;padding:.75rem;border-top:1px solid var(--lavender);border-bottom:1px solid var(--lavender)}
+.cert-mod{font-size:18px;color:var(--plum);margin:1rem 0}
+.cert-date{font-size:13px;color:var(--muted);margin-top:1.5rem}
+.print-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;font-size:12px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:.06em;text-transform:uppercase;background:var(--plum);color:#fff;border:none;border-radius:var(--r-sm);cursor:pointer;margin-top:1.5rem}
 
-/* QUIZ */
-.quiz-wrap{max-width:680px;margin:0 auto;}
-.quiz-prog{display:flex;align-items:center;gap:14px;margin-bottom:2rem;}
-.quiz-prog-bar{flex:1;height:6px;background:var(--lavender-light);border-radius:3px;overflow:hidden;}
-.quiz-prog-fill{height:100%;border-radius:3px;background:var(--plum);transition:width 0.35s;}
-.quiz-prog-txt{font-size:12px;color:var(--text-muted);font-weight:600;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;}
-.q-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow-sm);}
-.q-num{font-size:10px;font-weight:600;color:var(--amethyst);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;}
-.q-text{font-family:'Playfair Display',serif;font-size:20px;color:var(--plum);line-height:1.4;margin-bottom:1.5rem;}
-.opts{display:flex;flex-direction:column;gap:10px;}
-.opt{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;border:1.5px solid var(--border-med);border-radius:var(--radius-sm);cursor:pointer;transition:all 0.12s;}
-.opt:hover{border-color:var(--amethyst);background:var(--lavender-pale);}
-.opt.selected,.opt.correct{border-color:var(--plum);background:#f0e8f4;}
-.opt.wrong{border-color:#c0507a;background:#fdf0f4;}
-.opt-ltr{width:26px;height:26px;border-radius:50%;border:2px solid var(--lavender);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;color:var(--text-muted);}
-.opt.selected .opt-ltr,.opt.correct .opt-ltr{border-color:var(--plum);background:var(--plum);color:white;}
-.opt.wrong .opt-ltr{border-color:#c0507a;background:#c0507a;color:white;}
-.opt-txt{font-size:14px;color:var(--text);line-height:1.5;padding-top:3px;}
-.feedback{padding:12px 16px;border-radius:var(--radius-sm);font-size:13px;margin-top:14px;line-height:1.6;font-weight:500;}
-.fb-ok{background:#f0f2e8;color:#5a6a30;}
-.fb-err{background:#fdf0f4;color:#8b2252;}
-.q-nav{display:flex;justify-content:flex-end;margin-top:1.5rem;max-width:680px;margin-left:auto;margin-right:auto;}
-.q-next{padding:11px 28px;font-size:12px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:0.07em;text-transform:uppercase;background:var(--plum);color:white;border:none;border-radius:var(--radius-sm);cursor:pointer;}
-.q-next:disabled{opacity:0.4;cursor:default;}
-.q-next:not(:disabled):hover{background:var(--amethyst);}
+/* ── PROGRESS ── */
+.prog-items{display:flex;flex-direction:column;gap:10px}
+.prog-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm)}
 
-/* RESULTS */
-.result-wrap{max-width:500px;margin:3rem auto;text-align:center;}
-.score-ring{width:130px;height:130px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.75rem;border:4px solid var(--plum);background:#f0e8f4;}
-.score-ring.fail{border-color:#c0507a;background:#fdf0f4;}
-.score-num{font-family:'Playfair Display',serif;font-size:38px;color:var(--plum);}
-.score-ring.fail .score-num{color:#8b2252;}
-.score-lbl{font-size:11px;color:var(--amethyst);font-weight:600;letter-spacing:0.06em;text-transform:uppercase;}
-.score-ring.fail .score-lbl{color:#c0507a;}
-.result-title{font-size:28px;color:var(--plum);margin-bottom:10px;}
-.result-sub{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:2rem;}
-.result-actions{display:flex;flex-direction:column;gap:10px;}
-.sync-ok{font-size:12px;color:var(--jade-dark);margin-bottom:1rem;font-weight:600;}
-.sync-warn{font-size:12px;color:#8a6020;background:#fef8ec;padding:8px 14px;border-radius:var(--radius-sm);margin-bottom:1rem;}
+/* ── ADMIN ── */
+.sheets-box{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:2rem;box-shadow:var(--shadow-sm)}
+.sheets-box h3{font-size:20px;color:var(--plum);margin-bottom:6px}
+.sheets-box p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.sheets-row{display:flex;gap:10px}
+.sheets-row input{flex:1;padding:10px 14px;font-size:13px;font-family:'Montserrat',sans-serif;border:1.5px solid var(--border-md);border-radius:var(--r-sm);background:var(--lav-pale);color:var(--text);outline:none}
+.sheets-row input:focus{border-color:var(--amethyst)}
+.sheets-row button{padding:10px 20px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;background:var(--plum);color:#fff;border:none;border-radius:var(--r-sm);cursor:pointer}
+.conn-pill{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--jade-dk);font-weight:600;background:#f0f2e8;padding:6px 14px;border-radius:20px}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--jade-dk)}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:1.5rem}
+.stat-box{background:var(--white);border-radius:var(--r-sm);padding:1rem 1.25rem;border:1px solid var(--border)}
+.stat-lbl{font-size:10px;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:.08em}
+.stat-val{font-family:'Playfair Display',serif;font-size:30px;color:var(--plum);margin-top:4px}
+.a-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;box-shadow:var(--shadow-sm);margin-bottom:1.5rem}
+.a-card-title{font-size:20px;color:var(--plum);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;padding:10px 12px;font-size:10px;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border)}
+.tbl td{padding:11px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.add-form{background:var(--lav-pale);border-radius:var(--r-sm);padding:1.25rem;margin-top:1.5rem;border:1px solid var(--border)}
+.add-form h3{font-size:16px;color:var(--plum);margin-bottom:1rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.add-btn{padding:10px 22px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;background:var(--plum);color:#fff;border:none;border-radius:var(--r-sm);cursor:pointer;margin-top:8px}
 
-/* CERTIFICATE */
-.cert-wrap{max-width:680px;margin:0 auto;}
-.cert-card{background:var(--white);border:2px solid var(--lavender);border-radius:var(--radius);padding:3rem;text-align:center;box-shadow:var(--shadow);}
-.cert-header{margin-bottom:2rem;}
-.cert-header h3{font-size:13px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--amethyst);margin-bottom:8px;}
-.cert-header h2{font-size:32px;color:var(--plum);}
-.cert-name{font-size:22px;color:var(--amethyst);margin:1rem 0;padding:0.75rem;border-top:1px solid var(--lavender);border-bottom:1px solid var(--lavender);}
-.cert-module{font-size:18px;color:var(--plum);margin:1rem 0;}
-.cert-date{font-size:13px;color:var(--text-muted);margin-top:1.5rem;}
-.cert-seal{width:80px;height:80px;border-radius:50%;background:var(--lavender-light);border:3px solid var(--amethyst);display:flex;align-items:center;justify-content:center;margin:1.5rem auto 0;}
-.cert-seal svg{width:40px;height:40px;}
-.print-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;font-size:12px;font-weight:600;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;text-transform:uppercase;background:var(--plum);color:white;border:none;border-radius:var(--radius-sm);cursor:pointer;margin-top:1.5rem;}
+/* ── CURRICULUM ── */
+.role-tabs{display:flex;gap:8px;margin-bottom:1.5rem}
+.role-tab{padding:8px 18px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;border-radius:20px;cursor:pointer;border:1.5px solid var(--border-md);background:var(--white);color:var(--muted)}
+.role-tab.active{background:var(--plum);color:#fff;border-color:var(--plum)}
+.curr-list{display:flex;flex-direction:column;gap:8px}
+.curr-item{background:var(--white);border:1px solid var(--border);border-radius:var(--r-sm);padding:1rem 1.25rem;display:flex;align-items:center;gap:14px}
+.curr-ord{font-family:'Playfair Display',serif;font-size:18px;color:var(--lavender);width:24px;flex-shrink:0;text-align:center}
+.curr-info{flex:1}.curr-title{font-size:14px;font-weight:600;color:var(--plum)}.curr-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.curr-ctrls{display:flex;align-items:center;gap:10px}
+.tog-wrap{position:relative;width:38px;height:20px;flex-shrink:0}
+.tog-wrap input{opacity:0;width:0;height:0}
+.tog-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--lavender);border-radius:20px;transition:.2s}
+.tog-slider:before{position:absolute;content:'';height:14px;width:14px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s}
+input:checked+.tog-slider{background:var(--jade)}
+input:checked+.tog-slider:before{transform:translateX(18px)}
+.lock-tog{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px;cursor:pointer;user-select:none}
 
-/* PROGRESS */
-.prog-items{display:flex;flex-direction:column;gap:10px;}
-.prog-item{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);}
+/* ── CONTENT EDITOR ── */
+.mec{background:var(--white);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.mec-hdr{padding:1rem 1.25rem;display:flex;align-items:center;gap:12px;cursor:pointer}
+.mec-hdr:hover{background:var(--lav-pale)}
+.mec-body{padding:1.5rem;display:none;border-top:1px solid var(--border)}
+.mec-body.open{display:block}
+.chev{font-size:11px;margin-left:auto;color:var(--muted);transition:transform .2s;display:inline-block}
+.chev.open{transform:rotate(180deg)}
+.q-ec{background:var(--lav-pale);border:1px solid var(--border);border-radius:var(--r-sm);padding:1.25rem;margin-bottom:1rem}
+.q-ec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.q-ec-num{font-size:10px;font-weight:600;color:var(--amethyst);text-transform:uppercase;letter-spacing:.08em}
+.opt-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.opt-row input[type="radio"]{width:16px;height:16px;accent-color:var(--plum);flex-shrink:0;cursor:pointer}
+.opt-lbl{font-size:11px;color:var(--muted);font-weight:700;width:16px;flex-shrink:0}
+.opt-row input[type="text"]{flex:1;padding:8px 12px;font-size:13px}
+.divider{height:1px;background:var(--border);margin:1.25rem 0}
+.exp-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;background:var(--lav-light);color:var(--plum);border:1px solid var(--border-md);border-radius:var(--r-sm);cursor:pointer}
+.exp-btn:hover{background:var(--lavender)}
+.new-mod-box{background:var(--lav-pale);border:1.5px dashed var(--border-md);border-radius:var(--r);padding:1.5rem;margin-top:1rem}
 
-/* ADMIN */
-.sheets-box{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;box-shadow:var(--shadow-sm);}
-.sheets-box h3{font-size:20px;color:var(--plum);margin-bottom:6px;}
-.sheets-box p{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:14px;}
-.sheets-row{display:flex;gap:10px;}
-.sheets-row input{flex:1;padding:10px 14px;font-size:13px;font-family:'Montserrat',sans-serif;border:1.5px solid var(--border-med);border-radius:var(--radius-sm);background:var(--lavender-pale);color:var(--text);outline:none;}
-.sheets-row input:focus{border-color:var(--amethyst);}
-.sheets-row button{padding:10px 20px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;background:var(--plum);color:white;border:none;border-radius:var(--radius-sm);cursor:pointer;}
-.connected-pill{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--jade-dark);font-weight:600;background:#f0f2e8;padding:6px 14px;border-radius:20px;}
-.dot-live{width:8px;height:8px;border-radius:50%;background:var(--jade-dark);}
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:1.5rem;}
-.stat-box{background:var(--white);border-radius:var(--radius-sm);padding:1rem 1.25rem;border:1px solid var(--border);}
-.stat-lbl{font-size:10px;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:0.08em;}
-.stat-val{font-family:'Playfair Display',serif;font-size:30px;color:var(--plum);margin-top:4px;}
-.admin-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow-sm);margin-bottom:1.5rem;}
-.admin-card-title{font-size:20px;color:var(--plum);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between;}
-.tbl{width:100%;border-collapse:collapse;font-size:13px;}
-.tbl th{text-align:left;padding:10px 12px;font-size:10px;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid var(--border);}
-.tbl td{padding:11px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle;}
-.tbl tr:last-child td{border-bottom:none;}
-.add-form{background:var(--lavender-pale);border-radius:var(--radius-sm);padding:1.25rem;margin-top:1.5rem;border:1px solid var(--border);}
-.add-form h3{font-size:16px;color:var(--plum);margin-bottom:1rem;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.add-btn{padding:10px 22px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;background:var(--plum);color:white;border:none;border-radius:var(--radius-sm);cursor:pointer;margin-top:8px;}
-
-/* CURRICULUM BUILDER */
-.curriculum-role-tabs{display:flex;gap:8px;margin-bottom:1.5rem;}
-.role-tab{padding:8px 18px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;border-radius:20px;cursor:pointer;border:1.5px solid var(--border-med);background:var(--white);color:var(--text-muted);}
-.role-tab.active{background:var(--plum);color:white;border-color:var(--plum);}
-.curriculum-list{display:flex;flex-direction:column;gap:8px;}
-.curr-item{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.25rem;display:flex;align-items:center;gap:14px;}
-.curr-item-drag{color:var(--lavender);font-size:18px;cursor:grab;user-select:none;}
-.curr-item-order{font-family:'Playfair Display',serif;font-size:18px;color:var(--lavender);width:24px;flex-shrink:0;text-align:center;}
-.curr-item-icon{font-size:20px;}
-.curr-item-info{flex:1;}
-.curr-item-title{font-size:14px;font-weight:600;color:var(--plum);}
-.curr-item-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
-.curr-item-controls{display:flex;align-items:center;gap:10px;}
-.toggle-switch{position:relative;width:38px;height:20px;flex-shrink:0;}
-.toggle-switch input{opacity:0;width:0;height:0;}
-.toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--lavender);border-radius:20px;transition:0.2s;}
-.toggle-slider:before{position:absolute;content:'';height:14px;width:14px;left:3px;bottom:3px;background:white;border-radius:50%;transition:0.2s;}
-input:checked + .toggle-slider{background:var(--jade);}
-input:checked + .toggle-slider:before{transform:translateX(18px);}
-.lock-toggle{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:5px;cursor:pointer;user-select:none;}
-
-/* CONTENT EDITOR */
-.module-editor-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow-sm);}
-.mec-header{padding:1rem 1.25rem;display:flex;align-items:center;gap:12px;cursor:pointer;}
-.mec-header:hover{background:var(--lavender-pale);}
-.mec-body{padding:1.5rem;display:none;border-top:1px solid var(--border);}
-.mec-body.open{display:block;}
-.chevron{font-size:11px;margin-left:auto;color:var(--text-muted);transition:transform 0.2s;display:inline-block;}
-.chevron.open{transform:rotate(180deg);}
-.question-card{background:var(--lavender-pale);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.25rem;margin-bottom:1rem;}
-.qc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
-.qc-num{font-size:10px;font-weight:600;color:var(--amethyst);text-transform:uppercase;letter-spacing:0.08em;}
-.opt-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.opt-row input[type="radio"]{width:16px;height:16px;accent-color:var(--plum);flex-shrink:0;cursor:pointer;}
-.opt-lbl-sm{font-size:11px;color:var(--text-muted);font-weight:700;width:16px;flex-shrink:0;}
-.opt-row input[type="text"]{flex:1;padding:8px 12px;font-size:13px;}
-.divider{height:1px;background:var(--border);margin:1.25rem 0;}
-.export-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;background:var(--lavender-light);color:var(--plum);border:1px solid var(--border-med);border-radius:var(--radius-sm);cursor:pointer;}
-.export-btn:hover{background:var(--lavender);}
-.new-mod-box{background:var(--lavender-pale);border:1.5px dashed var(--border-med);border-radius:var(--radius);padding:1.5rem;margin-top:1rem;}
-
-/* TOAST */
-.toast{position:fixed;bottom:24px;right:24px;background:var(--plum);color:white;padding:14px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(92,51,89,0.3);animation:slideup 0.25s ease;}
-@keyframes slideup{from{transform:translateY(12px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-@media print{.no-print{display:none!important;}.print-only{display:block!important;}}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--plum);color:#fff;padding:14px 20px;border-radius:var(--r-sm);font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(92,51,89,.3);animation:sup .25s ease}
+@keyframes sup{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+@media print{.no-print{display:none!important}}
 </style>
 </head>
 <body>
 
-<!-- ===== BCA LOGO SVG TEMPLATE ===== -->
-<template id="bca-logo-tpl">
-<svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
-  <g transform="translate(50,50)">
-    <ellipse rx="6" ry="9" fill="#8a6090" transform="rotate(0) translate(0,-30)"/>
-    <ellipse rx="6" ry="9" fill="#9a70a0" transform="rotate(30) translate(0,-30)"/>
-    <ellipse rx="6" ry="9" fill="#7a5080" transform="rotate(60) translate(0,-30)"/>
-    <ellipse rx="6" ry="9" fill="#9a70a0" transform="rotate(90) translate(0,-30)"/>
-    <ellipse rx="6" ry="9" fill="#8a6090" transform="rotate(120) translate(0,-30)"/>
-    <ellipse rx="6" ry="9" fill="#6a4070" transform="rotate(150) translate(0,-30)"/>
-    <ellipse rx="6" ry="9" fill="#9a70a0" transform="rotate(180) translate(0,-30)"/>
-    <ellipse rx="6" ry="9" fill="#8a6090" transform="rotate(210) translate(0,-30)"/>
-    <ellipse rx="6" ry="9" fill="#7a5080" transform="rotate(240) translate(0,-30)"/>
-    <ellipse rx="6" ry="9" fill="#9a70a0" transform="rotate(270) translate(0,-30)"/>
-    <ellipse rx="6" ry="9" fill="#8a6090" transform="rotate(300) translate(0,-30)"/>
-    <ellipse rx="6" ry="9" fill="#7a5080" transform="rotate(330) translate(0,-30)"/>
-    <circle r="14" fill="#6F597E"/>
-    <circle cx="-3" cy="-3" r="6" fill="#ACB785"/>
-    <circle cx="3" cy="3" r="6" fill="#5C3359"/>
-    <circle cx="-3" cy="-3" r="2.5" fill="#5C3359"/>
-    <circle cx="3" cy="3" r="2.5" fill="#ACB785"/>
+<!-- ─── LOGO SVG (reused inline) ──────────────────────────────────────────── -->
+<svg id="logo-tpl" style="display:none" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(50,48)">
+    <ellipse rx="5" ry="8" fill="#9a70a0" transform="rotate(0) translate(0,-28)"/>
+    <ellipse rx="5" ry="8" fill="#8a6090" transform="rotate(30) translate(0,-28)"/>
+    <ellipse rx="5" ry="8" fill="#7a5080" transform="rotate(60) translate(0,-28)"/>
+    <ellipse rx="5" ry="8" fill="#9a70a0" transform="rotate(90) translate(0,-28)"/>
+    <ellipse rx="5" ry="8" fill="#8a6090" transform="rotate(120) translate(0,-28)"/>
+    <ellipse rx="5" ry="8" fill="#6a4070" transform="rotate(150) translate(0,-28)"/>
+    <ellipse rx="5" ry="8" fill="#9a70a0" transform="rotate(180) translate(0,-28)"/>
+    <ellipse rx="5" ry="8" fill="#8a6090" transform="rotate(210) translate(0,-28)"/>
+    <ellipse rx="5" ry="8" fill="#7a5080" transform="rotate(240) translate(0,-28)"/>
+    <ellipse rx="5" ry="8" fill="#9a70a0" transform="rotate(270) translate(0,-28)"/>
+    <ellipse rx="5" ry="8" fill="#8a6090" transform="rotate(300) translate(0,-28)"/>
+    <ellipse rx="5" ry="8" fill="#7a5080" transform="rotate(330) translate(0,-28)"/>
+    <circle r="13" fill="#6F597E"/>
+    <circle cx="-3" cy="-3" r="5.5" fill="#ACB785"/>
+    <circle cx="3" cy="3" r="5.5" fill="#5C3359"/>
+    <circle cx="-3" cy="-3" r="2" fill="#5C3359"/>
+    <circle cx="3" cy="3" r="2" fill="#ACB785"/>
   </g>
-  <line x1="44" y1="58" x2="44" y2="100" stroke="#ACB785" stroke-width="2"/>
-  <line x1="50" y1="62" x2="50" y2="115" stroke="#ACB785" stroke-width="2.5"/>
+  <line x1="44" y1="58" x2="44" y2="98" stroke="#ACB785" stroke-width="2"/>
+  <line x1="50" y1="62" x2="50" y2="112" stroke="#ACB785" stroke-width="2.5"/>
   <line x1="56" y1="58" x2="56" y2="105" stroke="#ACB785" stroke-width="2"/>
-  <line x1="44" y1="100" x2="44" y2="115" stroke="#6F597E" stroke-width="1.5"/>
-  <line x1="56" y1="105" x2="56" y2="120" stroke="#6F597E" stroke-width="1.5"/>
+  <line x1="44" y1="98" x2="44" y2="110" stroke="#6F597E" stroke-width="1.5"/>
+  <line x1="56" y1="105" x2="56" y2="118" stroke="#6F597E" stroke-width="1.5"/>
 </svg>
-</template>
 
-<!-- LOGIN -->
+<!-- ══════════════════════════════════════════════════════════════════════════
+     LOGIN
+══════════════════════════════════════════════════════════════════════════ -->
 <div class="screen active" id="s-login">
   <div class="auth-bg">
     <div class="auth-box">
-      <div class="auth-logo-area">
-        <div class="bca-logo-svg" id="login-logo"></div>
+      <div class="auth-top">
+        <svg class="tb-logo" style="width:64px;height:64px;display:block;margin:0 auto 1rem" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+          <use href="#logo-tpl"/>
+        </svg>
         <h1>bee·<span>cave</span></h1>
-        <p>Acupuncture & Nutrition</p>
+        <p>Acupuncture &amp; Nutrition</p>
       </div>
-      <div class="auth-card">
+      <div class="card">
         <h2>Practitioner Training</h2>
-        <div class="field"><label>Username</label><input type="text" id="l-user" placeholder="Enter your username"/></div>
-        <div class="field"><label>Password</label><input type="password" id="l-pass" placeholder="Enter your password"/></div>
-        <div class="err" id="l-err"></div>
-        <button class="btn-primary" onclick="doLogin()">Sign in</button>
-        <div class="link-row">New here? <button class="link-btn" onclick="go('s-register')">Create account</button></div>
+        <div class="field"><label>Username</label><input type="text" id="l-u" placeholder="Enter your username" autocomplete="username"/></div>
+        <div class="field"><label>Password</label><input type="password" id="l-p" placeholder="Enter your password" autocomplete="current-password"/></div>
+        <div class="err-msg" id="l-err"></div>
+        <button class="btn btn-plum" onclick="doLogin()">Sign in</button>
+        <div class="link-row">New here? <button class="lnk" onclick="go('s-reg')">Create account</button></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- REGISTER -->
-<div class="screen" id="s-register">
+<!-- ══════════════════════════════════════════════════════════════════════════
+     REGISTER
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="s-reg">
   <div class="auth-bg">
     <div class="auth-box">
-      <div class="auth-logo-area">
-        <div class="bca-logo-svg" id="reg-logo"></div>
+      <div class="auth-top">
         <h1>bee·<span>cave</span></h1>
-        <p>Acupuncture & Nutrition</p>
+        <p>Acupuncture &amp; Nutrition</p>
       </div>
-      <div class="auth-card">
+      <div class="card">
         <h2>Create account</h2>
-        <div class="field"><label>Full name</label><input type="text" id="r-name" placeholder="Your full name"/></div>
-        <div class="field"><label>Username</label><input type="text" id="r-user" placeholder="Choose a username"/></div>
+        <div class="field"><label>Full name</label><input type="text" id="r-n" placeholder="Your full name"/></div>
+        <div class="field"><label>Username</label><input type="text" id="r-u" placeholder="Choose a username" autocomplete="username"/></div>
         <div class="field"><label>Role</label>
-          <select id="r-role">
+          <select id="r-r">
             <option value="practitioner">Practitioner / Acupuncturist</option>
             <option value="staff">Front Office Staff</option>
             <option value="intern">Intern / Student</option>
           </select>
         </div>
-        <div class="field"><label>Password</label><input type="password" id="r-pass" placeholder="Minimum 6 characters"/></div>
-        <div class="err" id="r-err"></div>
-        <button class="btn-primary" onclick="doRegister()">Create account</button>
-        <button class="btn-ghost" onclick="go('s-login')">Back to sign in</button>
+        <div class="field"><label>Password</label><input type="password" id="r-p" placeholder="Minimum 6 characters" autocomplete="new-password"/></div>
+        <div class="err-msg" id="r-err"></div>
+        <button class="btn btn-plum" onclick="doRegister()">Create account</button>
+        <button class="btn btn-ghost" onclick="go('s-login')">Back to sign in</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- DASHBOARD -->
+<!-- ══════════════════════════════════════════════════════════════════════════
+     DASHBOARD
+══════════════════════════════════════════════════════════════════════════ -->
 <div class="screen" id="s-dash">
   <div class="topbar no-print">
-    <div class="topbar-left">
-      <svg class="topbar-icon" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg" id="topbar-logo-svg">
-        <g transform="translate(50,50)">
-          <ellipse rx="5" ry="8" fill="#8a6090" transform="rotate(0) translate(0,-28)"/>
-          <ellipse rx="5" ry="8" fill="#9a70a0" transform="rotate(30) translate(0,-28)"/>
-          <ellipse rx="5" ry="8" fill="#7a5080" transform="rotate(60) translate(0,-28)"/>
-          <ellipse rx="5" ry="8" fill="#9a70a0" transform="rotate(90) translate(0,-28)"/>
-          <ellipse rx="5" ry="8" fill="#8a6090" transform="rotate(120) translate(0,-28)"/>
-          <ellipse rx="5" ry="8" fill="#6a4070" transform="rotate(150) translate(0,-28)"/>
-          <ellipse rx="5" ry="8" fill="#9a70a0" transform="rotate(180) translate(0,-28)"/>
-          <ellipse rx="5" ry="8" fill="#8a6090" transform="rotate(210) translate(0,-28)"/>
-          <ellipse rx="5" ry="8" fill="#7a5080" transform="rotate(240) translate(0,-28)"/>
-          <ellipse rx="5" ry="8" fill="#9a70a0" transform="rotate(270) translate(0,-28)"/>
-          <ellipse rx="5" ry="8" fill="#8a6090" transform="rotate(300) translate(0,-28)"/>
-          <ellipse rx="5" ry="8" fill="#7a5080" transform="rotate(330) translate(0,-28)"/>
-          <circle r="12" fill="#6F597E"/>
-          <circle cx="-2.5" cy="-2.5" r="5" fill="#ACB785"/>
-          <circle cx="2.5" cy="2.5" r="5" fill="#5C3359"/>
-          <circle cx="-2.5" cy="-2.5" r="2" fill="#5C3359"/>
-          <circle cx="2.5" cy="2.5" r="2" fill="#ACB785"/>
-        </g>
-        <line x1="44" y1="56" x2="44" y2="95" stroke="#ACB785" stroke-width="2"/>
-        <line x1="50" y1="60" x2="50" y2="110" stroke="#ACB785" stroke-width="2.5"/>
-        <line x1="56" y1="56" x2="56" y2="100" stroke="#ACB785" stroke-width="2"/>
-        <line x1="44" y1="95" x2="44" y2="108" stroke="#6F597E" stroke-width="1.5"/>
-        <line x1="56" y1="100" x2="56" y2="113" stroke="#6F597E" stroke-width="1.5"/>
-      </svg>
-      <span class="topbar-title">bee·<span>cave</span> Training</span>
+    <div class="tb-left">
+      <svg class="tb-logo" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg"><use href="#logo-tpl"/></svg>
+      <span class="tb-title">bee·<span>cave</span> Training</span>
     </div>
-    <div class="topbar-right">
-      <span class="topbar-user" id="tb-user"></span>
-      <span class="badge badge-plum" id="tb-role"></span>
-      <span class="badge badge-jade" id="tb-admin" style="display:none">Admin</span>
-      <button class="topbar-logout" onclick="doLogout()">Sign out</button>
+    <div class="tb-right">
+      <span class="tb-user" id="tb-user"></span>
+      <span class="badge" id="tb-role"></span>
+      <span class="badge b-jade" id="tb-admin" style="display:none">Admin</span>
+      <button class="logout" onclick="doLogout()">Sign out</button>
     </div>
   </div>
   <div class="tabs no-print">
     <div class="tab active" onclick="switchTab('path',this)">Learning Path</div>
     <div class="tab" onclick="switchTab('certs',this)">My Certificates</div>
-    <div class="tab" id="admin-tab" style="display:none" onclick="switchTab('admin',this)">Users</div>
-    <div class="tab" id="curriculum-tab" style="display:none" onclick="switchTab('curriculum',this)">Curriculum</div>
-    <div class="tab" id="content-tab" style="display:none" onclick="switchTab('content',this)">Content Editor</div>
+    <div class="tab" id="tab-admin-btn" style="display:none" onclick="switchTab('admin',this)">Users</div>
+    <div class="tab" id="tab-curr-btn" style="display:none" onclick="switchTab('curr',this)">Curriculum</div>
+    <div class="tab" id="tab-content-btn" style="display:none" onclick="switchTab('content',this)">Content Editor</div>
   </div>
   <div class="content">
-    <!-- LEARNING PATH -->
+
+    <!-- PATH -->
     <div id="tab-path">
       <div class="path-intro">
         <h2 id="path-greeting">Your learning path</h2>
-        <p id="path-subtitle">Complete modules in order. Each module unlocks after passing the previous one.</p>
+        <p id="path-sub">Complete modules in order to unlock the next one.</p>
       </div>
-      <div class="path-grid" id="path-grid"></div>
+      <div id="path-grid"></div>
     </div>
 
-    <!-- CERTIFICATES -->
+    <!-- CERTS -->
     <div id="tab-certs" style="display:none">
-      <p class="section-label">Earned certificates</p>
+      <p class="sec-lbl">Earned certificates</p>
       <div id="certs-list"></div>
     </div>
 
-    <!-- USERS -->
+    <!-- USERS (admin) -->
     <div id="tab-admin" style="display:none">
       <div class="sheets-box">
         <h3>Google Sheets connection</h3>
-        <p>Paste your Apps Script Web App URL to sync logins, registrations, and quiz results to Google Sheets automatically.</p>
+        <p>Connect to sync logins and quiz results to your Google Sheet automatically.</p>
         <div class="sheets-row">
-          <input type="text" id="sheet-url" placeholder="https://script.google.com/macros/s/.../exec"/>
+          <input type="text" id="sh-url" placeholder="https://script.google.com/macros/s/.../exec"/>
           <button onclick="connectSheet()">Connect</button>
         </div>
-        <div class="err" id="sheet-err" style="margin-top:8px"></div>
-        <div id="sheet-ok" style="margin-top:8px"></div>
+        <div class="err-msg" id="sh-err" style="margin-top:8px"></div>
+        <div id="sh-ok" style="margin-top:8px"></div>
       </div>
       <div class="stat-grid" id="admin-stats"></div>
-      <div class="admin-card">
-        <div class="admin-card-title">All users</div>
+      <div class="a-card">
+        <div class="a-card-title">All users</div>
         <div style="overflow-x:auto">
-        <table class="tbl">
-          <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Email</th><th>Modules passed</th><th>Last login</th><th></th></tr></thead>
-          <tbody id="admin-tbody"></tbody>
-        </table>
+          <table class="tbl">
+            <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Email</th><th>Modules passed</th><th>Last login</th><th></th></tr></thead>
+            <tbody id="admin-tbody"></tbody>
+          </table>
         </div>
         <div class="add-form">
           <h3>Add new user</h3>
@@ -446,50 +390,58 @@ input:checked + .toggle-slider:before{transform:translateX(18px);}
             <div class="field"><label>Username</label><input type="text" id="a-user" placeholder="Username"/></div>
           </div>
           <div class="form-row">
-            <div class="field"><label>Role</label><select id="a-role"><option value="practitioner">Practitioner</option><option value="staff">Front Office Staff</option><option value="intern">Intern</option><option value="admin">Admin</option></select></div>
+            <div class="field"><label>Role</label>
+              <select id="a-role">
+                <option value="practitioner">Practitioner</option>
+                <option value="staff">Front Office Staff</option>
+                <option value="intern">Intern</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
             <div class="field"><label>Password</label><input type="password" id="a-pass" placeholder="Temporary password"/></div>
           </div>
-          <div class="field"><label>Email <span style="font-weight:400;color:var(--text-muted);text-transform:none;letter-spacing:0">(optional — sends welcome email)</span></label><input type="email" id="a-email" placeholder="practitioner@email.com"/></div>
+          <div class="field">
+            <label>Email <span style="font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0">(optional — sends welcome email)</span></label>
+            <input type="email" id="a-email" placeholder="practitioner@email.com"/>
+          </div>
           <div style="display:flex;align-items:center;gap:8px;margin:6px 0 10px">
             <input type="checkbox" id="a-welcome" checked style="width:15px;height:15px;accent-color:var(--plum);cursor:pointer"/>
-            <label for="a-welcome" style="font-size:13px;color:var(--text-muted);cursor:pointer;text-transform:none;letter-spacing:0">Send welcome email with login credentials</label>
+            <label for="a-welcome" style="font-size:13px;color:var(--muted);cursor:pointer;text-transform:none;letter-spacing:0">Send welcome email with login credentials</label>
           </div>
-          <div class="err" id="a-err"></div>
+          <div class="err-msg" id="a-err"></div>
           <button class="add-btn" onclick="adminAdd()">Add user</button>
         </div>
       </div>
     </div>
 
-    <!-- CURRICULUM BUILDER -->
-    <div id="tab-curriculum" style="display:none">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
-        <div>
-          <p class="section-label">Curriculum builder</p>
-          <p style="font-size:13px;color:var(--text-muted);margin-top:4px;max-width:520px">Assign modules to each role and set the order they must be completed. Toggle the lock icon to require sequential completion.</p>
-        </div>
+    <!-- CURRICULUM (admin) -->
+    <div id="tab-curr" style="display:none">
+      <div style="margin-bottom:1.5rem">
+        <p class="sec-lbl">Curriculum builder</p>
+        <p style="font-size:13px;color:var(--muted);margin-top:4px;max-width:520px">Assign modules to each role and set the order. Toggle sequential to require modules in order.</p>
       </div>
-      <div class="curriculum-role-tabs">
-        <button class="role-tab active" onclick="switchCurriculumRole('practitioner',this)">Practitioners</button>
-        <button class="role-tab" onclick="switchCurriculumRole('staff',this)">Front Office Staff</button>
-        <button class="role-tab" onclick="switchCurriculumRole('intern',this)">Interns</button>
+      <div class="role-tabs">
+        <button class="role-tab active" onclick="switchCurrRole('practitioner',this)">Practitioners</button>
+        <button class="role-tab" onclick="switchCurrRole('staff',this)">Front Office Staff</button>
+        <button class="role-tab" onclick="switchCurrRole('intern',this)">Interns</button>
       </div>
-      <div class="curriculum-list" id="curriculum-list"></div>
+      <div class="curr-list" id="curr-list"></div>
     </div>
 
-    <!-- CONTENT EDITOR -->
+    <!-- CONTENT EDITOR (admin) -->
     <div id="tab-content" style="display:none">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
         <div>
-          <p class="section-label">Content editor</p>
-          <p style="font-size:13px;color:var(--text-muted);margin-top:4px;max-width:520px">Edit modules, videos, resources and quiz questions. Click <strong>Export</strong> when done and upload the file to GitHub.</p>
+          <p class="sec-lbl">Content editor</p>
+          <p style="font-size:13px;color:var(--muted);margin-top:4px;max-width:520px">Edit modules, videos, resources and quiz questions. Export when done and upload to GitHub.</p>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="export-btn" style="background:#f0ece8;border-color:rgba(92,51,89,0.2)" onclick="importFromSheet()">&#8593; Import questions from Sheet</button>
-          <button class="export-btn" onclick="exportContent()">&#8595; Export updated portal</button>
+          <button class="exp-btn" style="background:#f0ece8;border-color:rgba(92,51,89,.2)" onclick="importFromSheet()">&#8593; Import from Sheet</button>
+          <button class="exp-btn" onclick="exportContent()">&#8595; Export portal</button>
         </div>
       </div>
       <div id="import-status" style="display:none;margin-bottom:1rem;padding:12px 16px;border-radius:8px;font-size:13px;font-weight:500"></div>
-      <div id="content-editor-list"></div>
+      <div id="content-list"></div>
       <div class="new-mod-box">
         <p style="font-size:15px;font-weight:600;color:var(--plum);margin-bottom:1rem">Add new module</p>
         <div class="form-row">
@@ -498,637 +450,789 @@ input:checked + .toggle-slider:before{transform:translateX(18px);}
         </div>
         <div class="field"><label>Description</label><textarea id="nm-desc" placeholder="Brief description..."></textarea></div>
         <div class="form-row">
-          <div class="field"><label>YouTube Video ID</label><input type="text" id="nm-video" placeholder="e.g. dQw4w9WgXcQ"/></div>
+          <div class="field"><label>YouTube Video ID</label><input type="text" id="nm-vid" placeholder="e.g. dQw4w9WgXcQ"/></div>
           <div class="field"><label>Icon background</label><input type="color" id="nm-color" value="#ede8f2" style="height:42px;padding:4px;width:100%"/></div>
         </div>
         <div class="field"><label>Assign to roles</label>
           <div style="display:flex;gap:16px;margin-top:4px">
-            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;text-transform:none;letter-spacing:0"><input type="checkbox" id="nm-r-prac" checked> Practitioners</label>
-            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;text-transform:none;letter-spacing:0"><input type="checkbox" id="nm-r-staff"> Front Office Staff</label>
-            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;text-transform:none;letter-spacing:0"><input type="checkbox" id="nm-r-intern"> Interns</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;text-transform:none;letter-spacing:0"><input type="checkbox" id="nm-prac" checked> Practitioners</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;text-transform:none;letter-spacing:0"><input type="checkbox" id="nm-staff"> Front Office Staff</label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;text-transform:none;letter-spacing:0"><input type="checkbox" id="nm-intern"> Interns</label>
           </div>
         </div>
-        <div class="err" id="nm-err"></div>
+        <div class="err-msg" id="nm-err"></div>
         <button class="add-btn" onclick="addNewModule()">Add module</button>
       </div>
     </div>
+
   </div>
 </div>
 
-<!-- MODULE DETAIL -->
-<div class="screen" id="s-module">
+<!-- ══════════════════════════════════════════════════════════════════════════
+     MODULE DETAIL
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="s-mod">
   <div class="topbar no-print">
-    <div class="topbar-left">
-      <svg class="topbar-icon" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
-        <g transform="translate(50,50)"><ellipse rx="5" ry="8" fill="#8a6090" transform="rotate(0) translate(0,-28)"/><ellipse rx="5" ry="8" fill="#9a70a0" transform="rotate(60) translate(0,-28)"/><ellipse rx="5" ry="8" fill="#7a5080" transform="rotate(120) translate(0,-28)"/><ellipse rx="5" ry="8" fill="#9a70a0" transform="rotate(180) translate(0,-28)"/><ellipse rx="5" ry="8" fill="#8a6090" transform="rotate(240) translate(0,-28)"/><ellipse rx="5" ry="8" fill="#7a5080" transform="rotate(300) translate(0,-28)"/><circle r="12" fill="#6F597E"/><circle cx="-2.5" cy="-2.5" r="5" fill="#ACB785"/><circle cx="2.5" cy="2.5" r="5" fill="#5C3359"/></g>
-        <line x1="50" y1="60" x2="50" y2="110" stroke="#ACB785" stroke-width="2.5"/>
-        <line x1="44" y1="56" x2="44" y2="100" stroke="#ACB785" stroke-width="2"/>
-        <line x1="56" y1="56" x2="56" y2="100" stroke="#ACB785" stroke-width="2"/>
-      </svg>
-      <span class="topbar-title">bee·<span>cave</span> Training</span>
+    <div class="tb-left">
+      <svg class="tb-logo" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg"><use href="#logo-tpl"/></svg>
+      <span class="tb-title">bee·<span>cave</span> Training</span>
     </div>
-    <div class="topbar-right"><button class="topbar-logout" onclick="doLogout()">Sign out</button></div>
+    <div class="tb-right"><button class="logout" onclick="doLogout()">Sign out</button></div>
   </div>
   <div class="content">
-    <button class="back-btn no-print" onclick="go('s-dash')">← Back to learning path</button>
+    <button class="back no-print" onclick="go('s-dash')">← Back to learning path</button>
     <div id="mod-detail"></div>
   </div>
 </div>
 
-<!-- QUIZ -->
+<!-- ══════════════════════════════════════════════════════════════════════════
+     QUIZ
+══════════════════════════════════════════════════════════════════════════ -->
 <div class="screen" id="s-quiz">
   <div class="topbar no-print">
-    <div class="topbar-left">
-      <svg class="topbar-icon" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg"><g transform="translate(50,50)"><ellipse rx="5" ry="8" fill="#8a6090" transform="rotate(0) translate(0,-28)"/><ellipse rx="5" ry="8" fill="#9a70a0" transform="rotate(60) translate(0,-28)"/><ellipse rx="5" ry="8" fill="#7a5080" transform="rotate(120) translate(0,-28)"/><ellipse rx="5" ry="8" fill="#9a70a0" transform="rotate(180) translate(0,-28)"/><ellipse rx="5" ry="8" fill="#8a6090" transform="rotate(240) translate(0,-28)"/><ellipse rx="5" ry="8" fill="#7a5080" transform="rotate(300) translate(0,-28)"/><circle r="12" fill="#6F597E"/><circle cx="-2.5" cy="-2.5" r="5" fill="#ACB785"/><circle cx="2.5" cy="2.5" r="5" fill="#5C3359"/></g><line x1="50" y1="60" x2="50" y2="110" stroke="#ACB785" stroke-width="2.5"/></svg>
-      <span class="topbar-title">bee·<span>cave</span> Training</span>
+    <div class="tb-left">
+      <svg class="tb-logo" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg"><use href="#logo-tpl"/></svg>
+      <span class="tb-title">bee·<span>cave</span> Training</span>
     </div>
-    <div class="topbar-right"><button class="topbar-logout" onclick="doLogout()">Sign out</button></div>
+    <div class="tb-right"><button class="logout" onclick="doLogout()">Sign out</button></div>
   </div>
   <div class="content">
-    <button class="back-btn no-print" onclick="go('s-module')">← Back to module</button>
-    <div class="quiz-prog"><div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qpfill" style="width:0%"></div></div><span class="quiz-prog-txt" id="qptxt">1 of 5</span></div>
-    <div class="quiz-wrap" id="q-area"></div>
-    <div class="q-nav no-print"><button class="q-next" id="q-next" onclick="nextQ()" disabled>Next</button></div>
+    <button class="back no-print" onclick="go('s-mod')">← Back to module</button>
+    <div class="q-prog">
+      <div class="q-prog-bar"><div class="q-prog-fill" id="q-pf" style="width:0%"></div></div>
+      <span class="q-prog-txt" id="q-pt">1 of 5</span>
+    </div>
+    <div class="q-wrap" id="q-area"></div>
+    <div class="q-nav no-print"><button class="q-next" id="q-nxt" onclick="nextQ()" disabled>Next</button></div>
   </div>
 </div>
 
-<!-- RESULTS -->
+<!-- ══════════════════════════════════════════════════════════════════════════
+     RESULTS
+══════════════════════════════════════════════════════════════════════════ -->
 <div class="screen" id="s-results">
   <div class="topbar no-print">
-    <div class="topbar-left"><span class="topbar-title">bee·<span>cave</span> Training</span></div>
-    <div class="topbar-right"><button class="topbar-logout" onclick="doLogout()">Sign out</button></div>
+    <div class="tb-left"><span class="tb-title">bee·<span>cave</span> Training</span></div>
+    <div class="tb-right"><button class="logout" onclick="doLogout()">Sign out</button></div>
   </div>
-  <div class="content"><div class="result-wrap" id="result-wrap"></div></div>
+  <div class="content"><div class="res-wrap" id="res-content"></div></div>
 </div>
 
-<!-- CERTIFICATE -->
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CERTIFICATE
+══════════════════════════════════════════════════════════════════════════ -->
 <div class="screen" id="s-cert">
   <div class="topbar no-print">
-    <div class="topbar-left"><span class="topbar-title">bee·<span>cave</span> Training</span></div>
-    <div class="topbar-right"><button class="topbar-logout" onclick="doLogout()">Sign out</button></div>
+    <div class="tb-left"><span class="tb-title">bee·<span>cave</span> Training</span></div>
+    <div class="tb-right"><button class="logout" onclick="doLogout()">Sign out</button></div>
   </div>
   <div class="content">
-    <button class="back-btn no-print" onclick="go('s-dash');switchTab('certs',null)">← Back to certificates</button>
-    <div class="cert-wrap" id="cert-detail"></div>
+    <button class="back no-print" onclick="go('s-dash');switchTab('certs',null)">← Back to certificates</button>
+    <div id="cert-detail"></div>
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════════════════════════ -->
 <script>
-const SHEET_URL_KEY='bca_sheet_url';
-
-let MODULES=[
-  {id:'digestion',title:'Digestive Health Protocols',icon:'🌿',iconBg:'#f0ece8',
-   desc:'Master the 5-Pattern Framework for digestive complaints, diagnostic questions, and supplement protocols.',
-   videoId:'',passingScore:80,
-   roles:{practitioner:true,staff:true,intern:true},
-   order:{practitioner:1,staff:1,intern:1},
-   locked:{practitioner:true,staff:true,intern:true},
-   resources:[
-     {name:'Digestive Health Protocols',type:'PDF Handout',icon:'📄',url:''},
-     {name:'Digestion Presentation Slides',type:'PPTX',icon:'📊',url:''},
-     {name:'Pattern Quick-Reference Card',type:'PDF Reference',icon:'📋',url:''},
-   ],
-   questions:[
-     {q:"A patient says 'food just sits in my stomach' with fatigue after eating. Which pattern is this?",opts:['Enzyme Deficiency','Low Stomach Acid (Spleen Qi Deficiency)','Bile Flow Dysfunction','Microbiome Imbalance'],ans:1,fb:"Correct. 'Food just sits in my stomach' + fatigue = Pattern 1 — Low Stomach Acid. First supplement: Zypan (Standard Process)."},
-     {q:"Which supplement is primary for Pattern 3 — Bile Flow Dysfunction?",opts:['Orthobiotic','GI Revive','AF Betafood (Standard Process)','Multizyme'],ans:2,fb:"AF Betafood (Standard Process) supports bile production and flow, paired with LivCo (MediHerb) for liver detox."},
-     {q:"Multiple food sensitivities, chronic loose stools, and skin issues — which TCM syndrome?",opts:['Liver Qi Stagnation / Liver-GB Damp-Heat','Spleen-Stomach Disharmony','Spleen Deficiency / Intestinal Wind','Spleen Qi Def. / Dampness Accumulation'],ans:2,fb:"Spleen Deficiency / Intestinal Wind = Pattern 4 — Gut Lining Inflammation. Primary supplement: GI Revive (Designs for Health)."},
-     {q:"Why should you NOT start treatment with probiotics only?",opts:['Probiotics only work for Pattern 4','Probiotics require a prescription',"Fix acid & enzymes first — probiotics won't survive bad terrain",'Probiotics conflict with acupuncture'],ans:2,fb:"Fix stomach acid and enzymes first. Probiotics cannot colonize effectively in a compromised digestive environment."},
-     {q:"Which acupuncture points are listed for Pattern 5 — Microbiome Imbalance?",opts:['LV3, GB34, GB24, ST36','SP6, ST25, CV4, BL25','ST36, SP9, CV12, BL21','SP9, ST25, CV6, BL20'],ans:2,fb:"ST36, SP9, CV12, BL21 are the key points for Pattern 5 (Spleen-Stomach Disharmony / Turbid Dampness)."},
-   ]},
-  {id:'pain',title:'Pain Management Protocols',icon:'⚡',iconBg:'#f5f0e8',
-   desc:'TCM-based pain assessment, supplement support, and acupuncture point combinations for acute and chronic pain.',
-   videoId:'',passingScore:80,
-   roles:{practitioner:true,staff:false,intern:true},
-   order:{practitioner:2,staff:99,intern:2},
-   locked:{practitioner:true,staff:false,intern:true},
-   resources:[
-     {name:'Pain Protocol Slides',type:'PPTX Presentation',icon:'📊',url:''},
-     {name:'Pain Protocol Presenter Script',type:'DOCX',icon:'📝',url:''},
-   ],
-   questions:[
-     {q:"In TCM, pain that is fixed in location and worse with cold most likely indicates which pattern?",opts:['Qi Stagnation','Blood Stasis','Damp Obstruction','Yin Deficiency'],ans:1,fb:"Fixed pain worsening with cold is a hallmark of Blood Stasis in TCM, distinct from Qi Stagnation which tends to be migratory."},
-     {q:"Which phase focuses primarily on acute pain relief?",opts:['Phase 3 — Wellness','Phase 1 — Symptom Relief','Phase 2 — Corrective','All phases equally'],ans:1,fb:"Phase 1 addresses acute/symptom relief, mirroring the structure across all BCA protocols."},
-     {q:"Which TCM organ system is primarily associated with chronic joint pain?",opts:['Lung','Kidney','Liver','Spleen'],ans:2,fb:"The Liver governs the tendons. Kidney deficiency is also a major factor in chronic degenerative joint conditions."},
-   ]},
-  {id:'fertility',title:'Fertility & Hormonal Health',icon:'🌸',iconBg:'#f5eef2',
-   desc:"Hormonal balance protocols, fertility support, cycle optimization, and supplement guidance for women's health.",
-   videoId:'',passingScore:80,
-   roles:{practitioner:true,staff:false,intern:true},
-   order:{practitioner:3,staff:99,intern:3},
-   locked:{practitioner:true,staff:false,intern:true},
-   resources:[
-     {name:'Fertility Protocol Slides',type:'PPTX Presentation',icon:'📊',url:''},
-     {name:'Fertility Presenter Script',type:'DOCX',icon:'📝',url:''},
-   ],
-   questions:[
-     {q:"Which digestive pattern should almost always be checked in female patients with hormonal imbalance?",opts:['Pattern 1 — Low Stomach Acid','Pattern 5 — Microbiome Imbalance','Pattern 3 — Bile Flow Dysfunction','Pattern 2 — Enzyme Deficiency'],ans:2,fb:"Hormonal patients almost always have Pattern 3. Bile flow is tied to estrogen metabolism — especially with HRT or birth control use."},
-     {q:"Which TCM pattern is most commonly associated with irregular cycles and PMS?",opts:['Spleen Qi Deficiency','Liver Qi Stagnation','Kidney Yang Deficiency','Heart Blood Deficiency'],ans:1,fb:"Liver Qi Stagnation is the most common pattern for PMS and irregular cycles. Primary point: LV3."},
-   ]},
-  {id:'patient-comm',title:'Patient Communication & Supplement Basics',icon:'💬',iconBg:'#edf0f5',
-   desc:"How to explain supplement recommendations, handle common patient questions, and support the clinical team from the front office.",
-   videoId:'',passingScore:80,
-   roles:{practitioner:false,staff:true,intern:false},
-   order:{practitioner:99,staff:2,intern:99},
-   locked:{practitioner:false,staff:true,intern:false},
-   resources:[
-     {name:'Front Office Protocol Guide',type:'PDF',icon:'📄',url:''},
-     {name:'Supplement FAQ Sheet',type:'PDF Reference',icon:'📋',url:''},
-   ],
-   questions:[
-     {q:"When a patient asks 'Why does the doctor recommend Standard Process instead of something from the health food store?', which is the best response?",opts:['Those stores have the same quality','Standard Process uses whole food concentrates with clinical research supporting their use','Supplements are all the same','We sell Standard Process because it is cheaper'],ans:1,fb:"Standard Process uses whole food concentrates with decades of clinical use. The practitioner can elaborate on specific differences based on the patient's needs."},
-     {q:"A patient calls asking if they should stop their supplements before a surgery. What should you do?",opts:['Tell them yes, stop all supplements 2 weeks before','Tell them no, supplements are safe','Take a message and have the practitioner call them back','Look it up online and advise them'],ans:2,fb:"Always defer clinical questions to the practitioner. Take a detailed message — who is calling, what surgery, what date — and ensure the practitioner follows up."},
-     {q:"What is the correct way to handle a patient who wants to purchase supplements without a practitioner recommendation?",opts:['Sell them whatever they want','Explain that your supplements are practitioner-grade and require a recommendation; offer to schedule an appointment','Refuse to speak with them','Give them a sample'],ans:1,fb:"Practitioner-grade supplements are recommended as part of a clinical protocol. The front office role is to support that process and facilitate appointments when patients have clinical questions."},
-   ]},
+// ─── MODULES DATA ─────────────────────────────────────────────────────────────
+let MODULES = [
+  {
+    id:'digestion',title:'Digestive Health Protocols',icon:'🌿',iconBg:'#f0ece8',
+    desc:'Master the 5-Pattern Framework for digestive complaints, diagnostic questions, and supplement protocols.',
+    videoId:'',passingScore:80,
+    roles:{practitioner:true,staff:true,intern:true},
+    order:{practitioner:1,staff:1,intern:1},
+    locked:{practitioner:true,staff:true,intern:true},
+    resources:[
+      {name:'Digestive Health Protocols',type:'PDF Handout',icon:'📄',url:''},
+      {name:'Digestion Presentation Slides',type:'PPTX',icon:'📊',url:''},
+      {name:'Pattern Quick-Reference Card',type:'PDF Reference',icon:'📋',url:''},
+    ],
+    questions:[
+      {q:"A patient says 'food just sits in my stomach' with fatigue after eating. Which pattern is this?",opts:['Enzyme Deficiency','Low Stomach Acid (Spleen Qi Deficiency)','Bile Flow Dysfunction','Microbiome Imbalance'],ans:1,fb:"Correct. 'Food just sits' + fatigue = Pattern 1 — Low Stomach Acid. First supplement: Zypan (Standard Process)."},
+      {q:"Which supplement is primary for Pattern 3 — Bile Flow Dysfunction?",opts:['Orthobiotic','GI Revive','AF Betafood (Standard Process)','Multizyme'],ans:2,fb:"AF Betafood (Standard Process) supports bile production and flow, paired with LivCo (MediHerb) for liver detox."},
+      {q:"Multiple food sensitivities, chronic loose stools, and skin issues — which TCM syndrome?",opts:['Liver Qi Stagnation','Spleen-Stomach Disharmony','Spleen Deficiency / Intestinal Wind','Spleen Qi Def. / Dampness Accumulation'],ans:2,fb:"Spleen Deficiency / Intestinal Wind = Pattern 4 — Gut Lining Inflammation. Primary supplement: GI Revive (Designs for Health)."},
+      {q:"Why should you NOT start treatment with probiotics only?",opts:['Probiotics only work for Pattern 4','Probiotics require a prescription',"Fix acid & enzymes first — probiotics won't survive bad terrain",'Probiotics conflict with acupuncture'],ans:2,fb:"Fix stomach acid and enzymes first. Probiotics cannot colonize effectively in a compromised digestive environment."},
+      {q:"Which acupuncture points are listed for Pattern 5 — Microbiome Imbalance?",opts:['LV3, GB34, GB24, ST36','SP6, ST25, CV4, BL25','ST36, SP9, CV12, BL21','SP9, ST25, CV6, BL20'],ans:2,fb:"ST36, SP9, CV12, BL21 are the key points for Pattern 5 (Spleen-Stomach Disharmony / Turbid Dampness)."},
+    ]
+  },
+  {
+    id:'pain',title:'Pain Management Protocols',icon:'⚡',iconBg:'#f5f0e8',
+    desc:'TCM-based pain assessment, supplement support, and acupuncture point combinations for acute and chronic pain.',
+    videoId:'',passingScore:80,
+    roles:{practitioner:true,staff:false,intern:true},
+    order:{practitioner:2,staff:99,intern:2},
+    locked:{practitioner:true,staff:false,intern:true},
+    resources:[
+      {name:'Pain Protocol Slides',type:'PPTX Presentation',icon:'📊',url:''},
+      {name:'Pain Protocol Presenter Script',type:'DOCX',icon:'📝',url:''},
+    ],
+    questions:[
+      {q:"In TCM, pain that is fixed in location and worse with cold most likely indicates which pattern?",opts:['Qi Stagnation','Blood Stasis','Damp Obstruction','Yin Deficiency'],ans:1,fb:"Fixed pain worsening with cold is a hallmark of Blood Stasis in TCM, distinct from Qi Stagnation which tends to be migratory."},
+      {q:"Which phase focuses primarily on acute pain relief?",opts:['Phase 3 — Wellness','Phase 1 — Symptom Relief','Phase 2 — Corrective','All phases equally'],ans:1,fb:"Phase 1 addresses acute/symptom relief, mirroring the structure across all BCA protocols."},
+      {q:"Which TCM organ system is primarily associated with chronic joint pain?",opts:['Lung','Kidney','Liver','Spleen'],ans:2,fb:"The Liver governs the tendons. Kidney deficiency is also a major factor in chronic degenerative joint conditions."},
+    ]
+  },
+  {
+    id:'fertility',title:'Fertility & Hormonal Health',icon:'🌸',iconBg:'#f5eef2',
+    desc:"Hormonal balance protocols, fertility support, cycle optimization, and supplement guidance for women's health.",
+    videoId:'',passingScore:80,
+    roles:{practitioner:true,staff:false,intern:true},
+    order:{practitioner:3,staff:99,intern:3},
+    locked:{practitioner:true,staff:false,intern:true},
+    resources:[
+      {name:'Fertility Protocol Slides',type:'PPTX Presentation',icon:'📊',url:''},
+      {name:'Fertility Presenter Script',type:'DOCX',icon:'📝',url:''},
+    ],
+    questions:[
+      {q:"Which digestive pattern should almost always be checked in female patients with hormonal imbalance?",opts:['Pattern 1 — Low Stomach Acid','Pattern 5 — Microbiome Imbalance','Pattern 3 — Bile Flow Dysfunction','Pattern 2 — Enzyme Deficiency'],ans:2,fb:"Hormonal patients almost always have Pattern 3. Bile flow is tied to estrogen metabolism — especially with HRT or birth control use."},
+      {q:"Which TCM pattern is most commonly associated with irregular cycles and PMS?",opts:['Spleen Qi Deficiency','Liver Qi Stagnation','Kidney Yang Deficiency','Heart Blood Deficiency'],ans:1,fb:"Liver Qi Stagnation is the most common pattern for PMS and irregular cycles. Primary point: LV3."},
+    ]
+  },
+  {
+    id:'patient-comm',title:'Patient Communication & Supplement Basics',icon:'💬',iconBg:'#edf0f5',
+    desc:"How to explain supplement recommendations, handle patient questions, and support the clinical team from the front office.",
+    videoId:'',passingScore:80,
+    roles:{practitioner:false,staff:true,intern:false},
+    order:{practitioner:99,staff:2,intern:99},
+    locked:{practitioner:false,staff:true,intern:false},
+    resources:[
+      {name:'Front Office Protocol Guide',type:'PDF',icon:'📄',url:''},
+      {name:'Supplement FAQ Sheet',type:'PDF Reference',icon:'📋',url:''},
+    ],
+    questions:[
+      {q:"When a patient asks why we recommend Standard Process instead of store supplements, what is the best response?",opts:['Those stores have the same quality','Standard Process uses whole food concentrates with clinical research supporting their use','Supplements are all the same','We sell Standard Process because it is cheaper'],ans:1,fb:"Standard Process uses whole food concentrates with decades of clinical use. The practitioner can elaborate on specific differences."},
+      {q:"A patient calls asking if they should stop their supplements before surgery. What should you do?",opts:['Tell them yes, stop all supplements','Tell them no, supplements are safe','Take a message and have the practitioner call them back','Look it up online and advise them'],ans:2,fb:"Always defer clinical questions to the practitioner. Take a detailed message and ensure the practitioner follows up."},
+      {q:"Which is the correct way to handle a patient who wants supplements without a practitioner recommendation?",opts:['Sell them whatever they want','Explain they require a recommendation; offer to schedule a consultation','Refuse to speak with them','Give them a free sample'],ans:1,fb:"Practitioner-grade supplements are part of a clinical protocol. Facilitate appointments when patients have clinical questions."},
+    ]
+  },
 ];
 
-let CURRICULUM_ROLE='practitioner';
+// ─── STORAGE HELPERS ──────────────────────────────────────────────────────────
+const USERS_KEY = 'bca_users_v2';
+const SHEET_KEY = 'bca_sheet_url';
 
-// ── Persistent storage helpers ──────────────────────────────────────────────
-function loadUsers(){
-  try{ return JSON.parse(localStorage.getItem('bca_users')||'{}'); }catch(e){ return {}; }
+function loadUsers() {
+  try { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); }
+  catch(e) { return {}; }
 }
-function saveUsers(users){
-  localStorage.setItem('bca_users', JSON.stringify(users));
+
+function saveUsers(u) {
+  localStorage.setItem(USERS_KEY, JSON.stringify(u));
 }
-function ensureAdmin(users){
-  if(!users['admin']){
-    users['admin']={name:'Admin',pass:'admin123',role:'admin',email:'',
-      joined:new Date().toISOString().slice(0,10),lastLogin:'',progress:{}};
+
+function getUser(username) {
+  return loadUsers()[username] || null;
+}
+
+function initAdmin() {
+  const users = loadUsers();
+  if (!users['admin']) {
+    users['admin'] = {
+      name:'Admin', pass:'admin123', role:'admin', email:'',
+      joined: new Date().toISOString().slice(0,10),
+      lastLogin:'', progress:{}
+    };
     saveUsers(users);
   }
-  return users;
 }
 
-let DB={
-  get users(){ return ensureAdmin(loadUsers()); },
-  sheetUrl:localStorage.getItem(SHEET_URL_KEY)||'',
-  currentUser:null,currentModule:null,
-  quiz:{moduleId:'',questions:[],idx:0,answers:[],answered:false}
+// ─── APP STATE ────────────────────────────────────────────────────────────────
+let STATE = {
+  currentUser: null,
+  currentModule: null,
+  sheetUrl: localStorage.getItem(SHEET_KEY) || '',
+  currRole: 'practitioner',
+  quiz: { moduleId:'', questions:[], idx:0, answers:[], answered:false }
 };
 
-function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
-
-function toast(msg,color){
-  const t=document.createElement('div');t.className='toast';
-  if(color)t.style.background=color;
-  t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3200);
+// ─── UTILITIES ────────────────────────────────────────────────────────────────
+function go(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  window.scrollTo(0, 0);
 }
 
-function injectLogos(){
-  const tpl=document.getElementById('bca-logo-tpl');
-  ['login-logo','reg-logo'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el&&tpl)el.innerHTML=tpl.innerHTML;
-  });
+function toast(msg, bg) {
+  const el = document.createElement('div');
+  el.className = 'toast';
+  if (bg) el.style.background = bg;
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3200);
 }
 
-async function syncSheet(action,payload){
-  if(!DB.sheetUrl)return false;
-  try{await fetch(DB.sheetUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...payload})});return true;}
-  catch(e){return false;}
+function syncSheet(action, payload) {
+  if (!STATE.sheetUrl) return;
+  fetch(STATE.sheetUrl, {
+    method: 'POST', mode: 'no-cors',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({action, ...payload})
+  }).catch(() => {});
 }
 
-function connectSheet(){
-  const url=document.getElementById('sheet-url').value.trim();
-  const err=document.getElementById('sheet-err');const ok=document.getElementById('sheet-ok');
-  if(!url.includes('script.google.com')){err.textContent='Please enter a valid Apps Script URL.';ok.innerHTML='';return;}
-  DB.sheetUrl=url;localStorage.setItem(SHEET_URL_KEY,url);
-  err.textContent='';
-  ok.innerHTML='<div class="connected-pill"><div class="dot-live"></div>Connected to Google Sheets</div>';
-  syncSheet('PING',{}).then(()=>toast('Google Sheets connected!'));
-}
+// ─── AUTH ─────────────────────────────────────────────────────────────────────
+function doLogin() {
+  const u = document.getElementById('l-u').value.trim();
+  const p = document.getElementById('l-p').value;
+  const err = document.getElementById('l-err');
 
-function doLogin(){
-  const u=document.getElementById('l-user').value.trim();
-  const p=document.getElementById('l-pass').value;
-  const err=document.getElementById('l-err');
-  if(!u||!p){err.textContent='Please enter username and password.';return;}
-  const users=DB.users;
-  const user=users[u];
-  if(!user||user.pass!==p){err.textContent='Invalid username or password.';return;}
-  err.textContent='';
-  user.lastLogin=new Date().toLocaleString();
+  if (!u || !p) { err.textContent = 'Please enter your username and password.'; return; }
+
+  initAdmin(); // make sure admin exists
+  const user = getUser(u);
+
+  if (!user) { err.textContent = 'Username not found.'; return; }
+  if (user.pass !== p) { err.textContent = 'Incorrect password.'; return; }
+
+  // Success
+  err.textContent = '';
+  const users = loadUsers();
+  users[u].lastLogin = new Date().toLocaleString();
   saveUsers(users);
-  DB.currentUser=u;
-  syncSheet('LOGIN',{username:u,name:user.name,role:user.role,timestamp:user.lastLogin});
+  STATE.currentUser = u;
+  syncSheet('LOGIN', {username:u, name:user.name, role:user.role, timestamp:users[u].lastLogin});
   loadDash();
 }
 
-function doRegister(){
-  const name=document.getElementById('r-name').value.trim();
-  const u=document.getElementById('r-user').value.trim();
-  const pass=document.getElementById('r-pass').value;
-  const role=document.getElementById('r-role').value;
-  const err=document.getElementById('r-err');
-  if(!name||!u||!pass){err.textContent='All fields required.';return;}
-  if(pass.length<6){err.textContent='Password must be 6+ characters.';return;}
-  const users=DB.users;
-  if(users[u]){err.textContent='Username already taken.';return;}
-  const joined=new Date().toISOString().slice(0,10);
-  users[u]={name,pass,role,email:'',joined,lastLogin:new Date().toLocaleString(),progress:{}};
+function doRegister() {
+  const name = document.getElementById('r-n').value.trim();
+  const u = document.getElementById('r-u').value.trim();
+  const p = document.getElementById('r-p').value;
+  const role = document.getElementById('r-r').value;
+  const err = document.getElementById('r-err');
+
+  if (!name || !u || !p) { err.textContent = 'All fields are required.'; return; }
+  if (p.length < 6) { err.textContent = 'Password must be at least 6 characters.'; return; }
+
+  const users = loadUsers();
+  if (users[u]) { err.textContent = 'That username is already taken.'; return; }
+
+  const joined = new Date().toISOString().slice(0,10);
+  users[u] = {name, pass:p, role, email:'', joined, lastLogin:new Date().toLocaleString(), progress:{}};
   saveUsers(users);
-  DB.currentUser=u;
-  syncSheet('REGISTER',{username:u,name,role,joined});
+  STATE.currentUser = u;
+  syncSheet('REGISTER', {username:u, name, role, joined});
+  err.textContent = '';
   loadDash();
 }
 
-function doLogout(){DB.currentUser=null;document.getElementById('l-user').value='';document.getElementById('l-pass').value='';go('s-login');}
-
-function getModulesForRole(role){
-  return MODULES
-    .filter(m=>m.roles[role])
-    .sort((a,b)=>(a.order[role]||99)-(b.order[role]||99));
+function doLogout() {
+  STATE.currentUser = null;
+  document.getElementById('l-u').value = '';
+  document.getElementById('l-p').value = '';
+  document.getElementById('l-err').textContent = '';
+  go('s-login');
 }
 
-function isModuleAvailable(moduleId,role,userProgress){
-  const m=MODULES.find(x=>x.id===moduleId);
-  if(!m||!m.roles[role])return false;
-  if(!m.locked[role])return true;
-  const mods=getModulesForRole(role);
-  const idx=mods.findIndex(x=>x.id===moduleId);
-  if(idx===0)return true;
-  const prev=mods[idx-1];
-  return !!(userProgress[prev.id]&&userProgress[prev.id].passed);
-}
+// ─── DASHBOARD ────────────────────────────────────────────────────────────────
+function loadDash() {
+  const user = getUser(STATE.currentUser);
+  if (!user) { go('s-login'); return; }
 
-function loadDash(){
-  const user=DB.users[DB.currentUser];
-  if(!user){go('s-login');return;}
-  document.getElementById('tb-user').textContent=user.name;
-  const roleLabels={practitioner:'Practitioner',staff:'Front Office',intern:'Intern',admin:'Admin'};
-  document.getElementById('tb-role').textContent=roleLabels[user.role]||user.role;
-  const isAdmin=user.role==='admin';
-  ['admin-tab','curriculum-tab','content-tab'].forEach(id=>document.getElementById(id).style.display=isAdmin?'':'none');
-  document.getElementById('tb-admin').style.display=isAdmin?'':'none';
-  if(DB.sheetUrl){
-    document.getElementById('sheet-url').value=DB.sheetUrl;
-    document.getElementById('sheet-ok').innerHTML='<div class="connected-pill"><div class="dot-live"></div>Connected to Google Sheets</div>';
+  document.getElementById('tb-user').textContent = user.name;
+  const roleLabels = {practitioner:'Practitioner',staff:'Front Office',intern:'Intern',admin:'Admin'};
+  const roleBadges = {practitioner:'b-plum',staff:'b-ameth',intern:'b-gray',admin:'b-jade'};
+  const roleEl = document.getElementById('tb-role');
+  roleEl.textContent = roleLabels[user.role] || user.role;
+  roleEl.className = 'badge ' + (roleBadges[user.role] || 'b-gray');
+
+  const isAdmin = user.role === 'admin';
+  ['tab-admin-btn','tab-curr-btn','tab-content-btn'].forEach(id =>
+    document.getElementById(id).style.display = isAdmin ? '' : 'none'
+  );
+  document.getElementById('tb-admin').style.display = isAdmin ? '' : 'none';
+
+  if (STATE.sheetUrl) {
+    document.getElementById('sh-url').value = STATE.sheetUrl;
+    document.getElementById('sh-ok').innerHTML = '<div class="conn-pill"><div class="dot-live"></div>Connected to Google Sheets</div>';
   }
-  const tabs=document.querySelectorAll('.tab');
-  tabs.forEach(t=>t.classList.remove('active'));tabs[0].classList.add('active');
-  ['path','certs','admin','curriculum','content'].forEach(t=>{const el=document.getElementById('tab-'+t);if(el)el.style.display='none';});
-  document.getElementById('tab-path').style.display='';
+
+  // Reset to first tab
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('.tab').classList.add('active');
+  ['path','certs','admin','curr','content'].forEach(t => {
+    const el = document.getElementById('tab-'+t);
+    if (el) el.style.display = 'none';
+  });
+  document.getElementById('tab-path').style.display = '';
+
   renderPath();
   go('s-dash');
 }
 
-function renderPath(){
-  const user=DB.users[DB.currentUser];
-  const role=user.role==='admin'?'practitioner':user.role;
-  const mods=getModulesForRole(role);
-  document.getElementById('path-greeting').textContent=`Welcome back, ${user.name.split(' ')[0]}`;
-  const passedCount=mods.filter(m=>user.progress[m.id]&&user.progress[m.id].passed).length;
-  document.getElementById('path-subtitle').textContent=`${passedCount} of ${mods.length} modules completed · Complete in order to advance`;
-  const grid=document.getElementById('path-grid');
-  grid.innerHTML=mods.map((m,i)=>{
-    const prog=user.progress[m.id];
-    const passed=prog&&prog.passed;
-    const tried=prog&&prog.score!==undefined&&!passed;
-    const avail=isModuleAvailable(m.id,role,user.progress);
-    let status=avail?(passed?'done':'available'):'locked';
-    let dotClass=status==='done'?'done':status==='available'?'available':'locked';
-    let cardClass=status;
-    let statusBadge='';
-    if(passed)statusBadge=`<span class="badge badge-jade">Passed · ${prog.score}%</span>`;
-    else if(tried)statusBadge=`<span class="badge badge-red">Retry · ${prog.score}%</span>`;
-    else if(!avail)statusBadge=`<span class="badge badge-gray">🔒 Locked</span>`;
-    else statusBadge=`<span class="badge badge-amethyst">Available</span>`;
-    const pct=passed?100:tried?40:0;
-    const orderNum=m.order[role]||i+1;
-    const isLast=i===mods.length-1;
+function switchTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  ['path','certs','admin','curr','content'].forEach(t => {
+    const e = document.getElementById('tab-'+t);
+    if (e) e.style.display = 'none';
+  });
+  const show = document.getElementById('tab-'+tab);
+  if (show) show.style.display = '';
+  if (tab === 'certs') renderCerts();
+  if (tab === 'admin') renderAdmin();
+  if (tab === 'curr') renderCurr();
+  if (tab === 'content') renderContentEditor();
+}
+
+// ─── LEARNING PATH ────────────────────────────────────────────────────────────
+function getModsForRole(role) {
+  return MODULES
+    .filter(m => m.roles[role])
+    .sort((a,b) => (a.order[role]||99) - (b.order[role]||99));
+}
+
+function isAvailable(moduleId, role, progress) {
+  const m = MODULES.find(x => x.id === moduleId);
+  if (!m || !m.roles[role]) return false;
+  if (!m.locked[role]) return true;
+  const mods = getModsForRole(role);
+  const idx = mods.findIndex(x => x.id === moduleId);
+  if (idx === 0) return true;
+  const prev = mods[idx-1];
+  return !!(progress[prev.id] && progress[prev.id].passed);
+}
+
+function renderPath() {
+  const user = getUser(STATE.currentUser);
+  if (!user) return;
+  const role = user.role === 'admin' ? 'practitioner' : user.role;
+  const mods = getModsForRole(role);
+  const prog = user.progress || {};
+
+  document.getElementById('path-greeting').textContent = 'Welcome back, ' + user.name.split(' ')[0];
+  const passedCount = mods.filter(m => prog[m.id] && prog[m.id].passed).length;
+  document.getElementById('path-sub').textContent =
+    passedCount + ' of ' + mods.length + ' modules completed · Complete in order to advance';
+
+  document.getElementById('path-grid').innerHTML = mods.map((m, i) => {
+    const p = prog[m.id];
+    const passed = p && p.passed;
+    const tried = p && p.score !== undefined && !passed;
+    const avail = isAvailable(m.id, role, prog);
+    const status = passed ? 'done' : avail ? 'avail' : 'locked';
+    const ord = m.order[role] || (i+1);
+    const isLast = i === mods.length - 1;
+
+    let badge = '';
+    if (passed) badge = `<span class="badge b-jade">Passed · ${p.score}%</span>`;
+    else if (tried) badge = `<span class="badge b-red">Retry · ${p.score}%</span>`;
+    else if (!avail) badge = `<span class="badge b-gray">🔒 Locked</span>`;
+    else badge = `<span class="badge b-ameth">Available</span>`;
+
+    const pct = passed ? 100 : tried ? 40 : 0;
+    const clickable = avail ? `onclick="openMod('${m.id}')"` : '';
+
     return `<div class="path-item">
-      <div class="path-line-col">
-        <div class="path-dot ${dotClass}"></div>
-        ${!isLast?`<div class="path-connector"></div>`:''}
+      <div class="path-line">
+        <div class="path-dot ${status}"></div>
+        ${!isLast ? '<div class="path-conn"></div>' : ''}
       </div>
       <div class="path-card-wrap">
-        <div class="path-card ${cardClass}" onclick="${avail?`openMod('${m.id}')`:''}" style="${avail?'':'pointer-events:none'}">
-          <div class="path-card-top">
-            <div class="order-badge ${dotClass}">${orderNum}</div>
-            <div class="path-card-icon" style="background:${m.iconBg}">${m.icon}</div>
-            <div class="path-card-info">
-              <div class="path-card-title">${m.title}</div>
-              <div class="path-card-desc">${m.desc}</div>
+        <div class="path-card ${status}" ${clickable} style="${avail?'':'pointer-events:none'}">
+          <div class="pc-top">
+            <div class="pc-ord ${status}">${ord}</div>
+            <div class="pc-icon" style="background:${m.iconBg}">${m.icon}</div>
+            <div class="pc-info">
+              <div class="pc-title">${m.title}</div>
+              <div class="pc-desc">${m.desc}</div>
             </div>
-            ${!avail?`<div class="lock-icon">🔒</div>`:''}
+            ${!avail ? '<span style="font-size:18px">🔒</span>' : ''}
           </div>
-          <div class="path-card-meta">${statusBadge}${m.questions.length>0?`<span style="font-size:11px;color:var(--text-light)">${m.questions.length} quiz questions</span>`:''}</div>
-          <div class="path-prog-bar"><div class="path-prog-fill" style="width:${pct}%"></div></div>
+          <div class="pc-meta">
+            ${badge}
+            ${m.questions.length ? `<span style="font-size:11px;color:var(--light)">${m.questions.length} quiz questions</span>` : ''}
+          </div>
+          <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-function switchTab(tab,el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  if(el)el.classList.add('active');
-  ['path','certs','admin','curriculum','content'].forEach(t=>{const e=document.getElementById('tab-'+t);if(e)e.style.display='none';});
-  const show=document.getElementById('tab-'+tab);
-  if(show)show.style.display='';
-  if(tab==='admin')renderAdmin();
-  if(tab==='curriculum')renderCurriculum();
-  if(tab==='content')renderContentEditor();
-  if(tab==='certs')renderCerts();
-}
-
-function renderCerts(){
-  const user=DB.users[DB.currentUser];
-  const passed=MODULES.filter(m=>user.progress[m.id]&&user.progress[m.id].passed);
-  const list=document.getElementById('certs-list');
-  if(!passed.length){list.innerHTML=`<div style="text-align:center;padding:3rem;color:var(--text-muted)"><p style="font-size:36px;margin-bottom:1rem">🎓</p><p style="font-size:15px">No certificates yet — complete a module to earn your first certificate!</p></div>`;return;}
-  list.innerHTML=passed.map(m=>{
-    const prog=user.progress[m.id];
+// ─── CERTIFICATES ─────────────────────────────────────────────────────────────
+function renderCerts() {
+  const user = getUser(STATE.currentUser);
+  const prog = user.progress || {};
+  const passed = MODULES.filter(m => prog[m.id] && prog[m.id].passed);
+  const list = document.getElementById('certs-list');
+  if (!passed.length) {
+    list.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--muted)"><p style="font-size:36px;margin-bottom:1rem">🎓</p><p style="font-size:15px">Complete a module to earn your first certificate!</p></div>';
+    return;
+  }
+  list.innerHTML = passed.map(m => {
+    const p = prog[m.id];
     return `<div class="prog-item" style="cursor:pointer" onclick="showCert('${m.id}')">
       <div style="font-size:24px">${m.icon}</div>
-      <div style="flex:1"><div style="font-size:14px;font-weight:600;color:var(--plum)">${m.title}</div>
-      <div style="font-size:12px;color:var(--text-muted)">Passed ${prog.date} · Score: ${prog.score}%</div></div>
-      <span class="badge badge-jade">View certificate →</span>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:600;color:var(--plum)">${m.title}</div>
+        <div style="font-size:12px;color:var(--muted)">Passed ${p.date} · Score: ${p.score}%</div>
+      </div>
+      <span class="badge b-jade">View →</span>
     </div>`;
   }).join('');
 }
 
-function showCert(moduleId){
-  const m=MODULES.find(x=>x.id===moduleId);
-  const user=DB.users[DB.currentUser];
-  const prog=user.progress[moduleId];
-  document.getElementById('cert-detail').innerHTML=`
+function showCert(moduleId) {
+  const m = MODULES.find(x => x.id === moduleId);
+  const user = getUser(STATE.currentUser);
+  const p = user.progress[moduleId];
+  document.getElementById('cert-detail').innerHTML = `
     <div class="cert-card">
-      <div class="cert-header">
-        <h3>Certificate of Completion</h3>
-        <h2>bee·cave Acupuncture & Nutrition</h2>
-        <p style="font-size:13px;color:var(--text-muted);margin-top:4px">Practitioner Training Program</p>
-      </div>
-      <p style="font-size:14px;color:var(--text-muted)">This certifies that</p>
+      <h3>Certificate of Completion</h3>
+      <h2>bee·cave Acupuncture &amp; Nutrition</h2>
+      <p style="font-size:13px;color:var(--muted);margin-top:4px">Practitioner Training Program</p>
+      <p style="font-size:14px;color:var(--muted);margin-top:2rem">This certifies that</p>
       <div class="cert-name">${user.name}</div>
-      <p style="font-size:14px;color:var(--text-muted)">has successfully completed</p>
-      <div class="cert-module">${m.title}</div>
-      <p style="font-size:14px;color:var(--text-muted)">with a score of <strong>${prog.score}%</strong></p>
-      <div class="cert-seal">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <g transform="translate(50,50)">
-            <ellipse rx="4" ry="7" fill="#8a6090" transform="rotate(0) translate(0,-26)"/>
-            <ellipse rx="4" ry="7" fill="#9a70a0" transform="rotate(45) translate(0,-26)"/>
-            <ellipse rx="4" ry="7" fill="#7a5080" transform="rotate(90) translate(0,-26)"/>
-            <ellipse rx="4" ry="7" fill="#8a6090" transform="rotate(135) translate(0,-26)"/>
-            <ellipse rx="4" ry="7" fill="#9a70a0" transform="rotate(180) translate(0,-26)"/>
-            <ellipse rx="4" ry="7" fill="#7a5080" transform="rotate(225) translate(0,-26)"/>
-            <ellipse rx="4" ry="7" fill="#8a6090" transform="rotate(270) translate(0,-26)"/>
-            <ellipse rx="4" ry="7" fill="#9a70a0" transform="rotate(315) translate(0,-26)"/>
-            <circle r="18" fill="#6F597E"/>
-            <circle cx="-4" cy="-4" r="8" fill="#ACB785"/>
-            <circle cx="4" cy="4" r="8" fill="#5C3359"/>
-            <circle cx="-4" cy="-4" r="3" fill="#5C3359"/>
-            <circle cx="4" cy="4" r="3" fill="#ACB785"/>
-          </g>
-          <line x1="46" y1="58" x2="46" y2="80" stroke="#ACB785" stroke-width="2"/>
-          <line x1="50" y1="62" x2="50" y2="88" stroke="#ACB785" stroke-width="2.5"/>
-          <line x1="54" y1="58" x2="54" y2="84" stroke="#ACB785" stroke-width="2"/>
-        </svg>
-      </div>
-      <div class="cert-date">Completed on ${prog.date}</div>
+      <p style="font-size:14px;color:var(--muted)">has successfully completed</p>
+      <div class="cert-mod">${m.title}</div>
+      <p style="font-size:14px;color:var(--muted)">with a score of <strong>${p.score}%</strong></p>
+      <div class="cert-date">Completed on ${p.date}</div>
       <button class="print-btn no-print" onclick="window.print()">🖨 Print Certificate</button>
     </div>`;
   go('s-cert');
 }
 
-function openMod(id){
-  const m=MODULES.find(x=>x.id===id);
-  DB.currentModule=id;
-  const user=DB.users[DB.currentUser];
-  const prog=user.progress[id];
-  const passed=prog&&prog.passed;
-  const videoSection=m.videoId
-    ?`<div class="video-box"><iframe src="https://www.youtube.com/embed/${m.videoId}" allowfullscreen></iframe></div>`
-    :`<div class="video-box"><div class="video-placeholder"><svg viewBox="0 0 24 24"><path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><p>Training video coming soon</p><small>Add the YouTube ID in Content Editor</small></div></div>`;
-  const resources=m.resources.map(r=>`<div class="res-item"><div class="res-icon">${r.icon}</div><div class="res-info"><div class="res-name">${r.name}</div><div class="res-type">${r.type}</div></div>${r.url?`<a class="res-dl" href="${r.url}" target="_blank">Download</a>`:`<button class="res-dl" onclick="toast('Add file URL in Content Editor to enable downloads')">Download</button>`}</div>`).join('');
-  const quizStatus=passed
-    ?`<div style="text-align:center;margin-top:12px"><span class="badge badge-jade" style="font-size:13px;padding:6px 16px">Passed ✓ · ${prog.score}% · <button onclick="showCert('${id}')" style="background:none;border:none;cursor:pointer;color:var(--jade-dark);font-weight:600;font-size:12px">View certificate</button></span></div>`
-    :`<p class="quiz-note">Complete the quiz to finish this module. Passing score: ${m.passingScore}%</p>`;
-  document.getElementById('mod-detail').innerHTML=`
-    <div class="mod-header">
-      <div class="mod-header-icon" style="background:${m.iconBg}">${m.icon}</div>
-      <div class="mod-header-text"><h2>${m.title}</h2><p>${m.desc}</p></div>
+// ─── MODULE DETAIL ────────────────────────────────────────────────────────────
+function openMod(id) {
+  const m = MODULES.find(x => x.id === id);
+  STATE.currentModule = id;
+  const user = getUser(STATE.currentUser);
+  const prog = user.progress || {};
+  const p = prog[id];
+  const passed = p && p.passed;
+
+  const video = m.videoId
+    ? `<div class="video-box"><iframe src="https://www.youtube.com/embed/${m.videoId}" allowfullscreen></iframe></div>`
+    : `<div class="video-box"><div class="vid-ph"><svg viewBox="0 0 24 24"><path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg><p>Training video coming soon</p><small>Add YouTube ID in Content Editor</small></div></div>`;
+
+  const resources = m.resources.map(r =>
+    `<div class="res-item"><div class="res-ico">${r.icon}</div>
+    <div style="flex:1"><div class="res-name">${r.name}</div><div class="res-type">${r.type}</div></div>
+    ${r.url ? `<a class="res-dl" href="${r.url}" target="_blank">Download</a>` : `<button class="res-dl" onclick="toast('Add URL in Content Editor to enable downloads')">Download</button>`}
+    </div>`
+  ).join('');
+
+  const quizStatus = passed
+    ? `<div style="text-align:center;margin-top:12px">
+        <span class="badge b-jade" style="font-size:13px;padding:6px 16px">Passed ✓ · ${p.score}%</span>
+        <button onclick="showCert('${id}')" style="background:none;border:none;cursor:pointer;color:var(--jade-dk);font-weight:600;font-size:12px;margin-left:8px">View certificate</button>
+       </div>`
+    : `<p class="quiz-note">Complete the quiz to finish this module. Passing score: ${m.passingScore}%</p>`;
+
+  document.getElementById('mod-detail').innerHTML = `
+    <div class="mod-hdr">
+      <div class="mod-hdr-icon" style="background:${m.iconBg}">${m.icon}</div>
+      <div><h2>${m.title}</h2><p>${m.desc}</p></div>
     </div>
-    <p class="section-label">Training video</p>${videoSection}
-    <p class="section-label" style="margin-top:1.5rem">Materials</p>
-    <div class="resources-list">${resources}</div>
-    <p class="section-label">Knowledge check</p>
-    <button class="start-quiz-btn" onclick="startQuiz('${id}')">${passed?'↻ Retake quiz':'→ Start quiz'}</button>
+    <p class="sec-lbl">Training video</p>
+    ${video}
+    <p class="sec-lbl" style="margin-top:1.5rem">Materials</p>
+    <div class="res-list">${resources}</div>
+    <p class="sec-lbl">Knowledge check</p>
+    <button class="quiz-start" onclick="startQuiz('${id}')">${passed ? '↻ Retake quiz' : '→ Start quiz'}</button>
     ${quizStatus}`;
-  go('s-module');
+  go('s-mod');
 }
 
-function startQuiz(mid){
-  const m=MODULES.find(x=>x.id===mid);
-  DB.quiz={moduleId:mid,questions:m.questions,idx:0,answers:[],answered:false};
-  renderQ();go('s-quiz');
+// ─── QUIZ ─────────────────────────────────────────────────────────────────────
+function startQuiz(mid) {
+  const m = MODULES.find(x => x.id === mid);
+  if (!m.questions.length) { toast('No questions added yet for this module.'); return; }
+  STATE.quiz = {moduleId:mid, questions:m.questions, idx:0, answers:[], answered:false};
+  renderQuestion();
+  go('s-quiz');
 }
 
-function renderQ(){
-  const qz=DB.quiz;const q=qz.questions[qz.idx];
-  const pct=Math.round((qz.idx/qz.questions.length)*100);
-  document.getElementById('qpfill').style.width=pct+'%';
-  document.getElementById('qptxt').textContent=`${qz.idx+1} of ${qz.questions.length}`;
-  document.getElementById('q-next').disabled=true;qz.answered=false;
-  document.getElementById('q-next').textContent=qz.idx===qz.questions.length-1?'Submit quiz':'Next question';
-  const opts=q.opts.map((o,i)=>`<div class="opt" id="o${i}" onclick="pickOpt(${i})"><div class="opt-ltr">${String.fromCharCode(65+i)}</div><div class="opt-txt">${o}</div></div>`).join('');
-  document.getElementById('q-area').innerHTML=`<div class="q-card"><div class="q-num">Question ${qz.idx+1}</div><div class="q-text">${q.q}</div><div class="opts">${opts}</div><div id="qfb"></div></div>`;
+function renderQuestion() {
+  const qz = STATE.quiz;
+  const q = qz.questions[qz.idx];
+  const pct = Math.round((qz.idx / qz.questions.length) * 100);
+  document.getElementById('q-pf').style.width = pct + '%';
+  document.getElementById('q-pt').textContent = (qz.idx+1) + ' of ' + qz.questions.length;
+  document.getElementById('q-nxt').disabled = true;
+  document.getElementById('q-nxt').textContent = qz.idx === qz.questions.length-1 ? 'Submit quiz' : 'Next question';
+  qz.answered = false;
+  const opts = q.opts.map((o,i) =>
+    `<div class="opt" id="opt-${i}" onclick="pickOpt(${i})">
+      <div class="opt-ltr">${String.fromCharCode(65+i)}</div>
+      <div class="opt-txt">${o}</div>
+    </div>`
+  ).join('');
+  document.getElementById('q-area').innerHTML =
+    `<div class="q-card">
+      <div class="q-num">Question ${qz.idx+1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="opts">${opts}</div>
+      <div id="q-fb"></div>
+    </div>`;
 }
 
-function pickOpt(i){
-  if(DB.quiz.answered)return;DB.quiz.answered=true;DB.quiz.answers[DB.quiz.idx]=i;
-  const q=DB.quiz.questions[DB.quiz.idx];const correct=i===q.ans;
-  document.querySelectorAll('.opt').forEach((el,idx)=>{
-    el.style.cursor='default';
-    if(idx===i)el.classList.add(correct?'correct':'wrong');
-    if(!correct&&idx===q.ans)el.classList.add('correct');
+function pickOpt(i) {
+  if (STATE.quiz.answered) return;
+  STATE.quiz.answered = true;
+  STATE.quiz.answers[STATE.quiz.idx] = i;
+  const q = STATE.quiz.questions[STATE.quiz.idx];
+  const correct = i === q.ans;
+  document.querySelectorAll('.opt').forEach((el, idx) => {
+    el.style.cursor = 'default';
+    if (idx === i) el.classList.add(correct ? 'correct' : 'wrong');
+    if (!correct && idx === q.ans) el.classList.add('correct');
   });
-  document.getElementById('qfb').innerHTML=`<div class="feedback ${correct?'fb-ok':'fb-err'}">${correct?'✓ ':'✗ '}${q.fb}</div>`;
-  document.getElementById('q-next').disabled=false;
+  document.getElementById('q-fb').innerHTML =
+    `<div class="fb ${correct ? 'fb-ok' : 'fb-err'}">${correct ? '✓ ' : '✗ '}${q.fb}</div>`;
+  document.getElementById('q-nxt').disabled = false;
 }
 
-function nextQ(){
-  const qz=DB.quiz;
-  if(qz.idx<qz.questions.length-1){qz.idx++;renderQ();}
+function nextQ() {
+  const qz = STATE.quiz;
+  if (qz.idx < qz.questions.length-1) { qz.idx++; renderQuestion(); }
   else showResults();
 }
 
-function showResults(){
-  const qz=DB.quiz;const total=qz.questions.length;
-  const correct=qz.answers.filter((a,i)=>a===qz.questions[i].ans).length;
-  const pct=Math.round((correct/total)*100);
-  const m=MODULES.find(x=>x.id===qz.moduleId);
-  const passed=pct>=m.passingScore;
-  const user=DB.users[DB.currentUser];
-  const prev=user.progress[qz.moduleId];
-  if(!prev||pct>(prev.score||0)){
-    user.progress[qz.moduleId]={score:pct,passed,date:new Date().toISOString().slice(0,10)};
-    const allUsers=loadUsers();
-    if(allUsers[DB.currentUser])allUsers[DB.currentUser].progress=user.progress;
-    saveUsers(allUsers);
+function showResults() {
+  const qz = STATE.quiz;
+  const total = qz.questions.length;
+  const correct = qz.answers.filter((a,i) => a === qz.questions[i].ans).length;
+  const pct = Math.round((correct/total)*100);
+  const m = MODULES.find(x => x.id === qz.moduleId);
+  const passed = pct >= m.passingScore;
+
+  // Save progress to localStorage
+  const users = loadUsers();
+  if (users[STATE.currentUser]) {
+    if (!users[STATE.currentUser].progress) users[STATE.currentUser].progress = {};
+    const prev = users[STATE.currentUser].progress[qz.moduleId];
+    if (!prev || pct > (prev.score||0)) {
+      users[STATE.currentUser].progress[qz.moduleId] = {
+        score: pct, passed, date: new Date().toISOString().slice(0,10)
+      };
+      saveUsers(users);
+    }
   }
-  const payload={username:DB.currentUser,name:user.name,role:user.role,module:m.title,score:pct,passed,correct,total,timestamp:new Date().toLocaleString()};
-  syncSheet('QUIZ_RESULT',payload).then(synced=>{
-    const syncMsg=synced?`<div class="sync-ok">✓ Results saved to Google Sheets</div>`:(DB.sheetUrl?`<div class="sync-warn">Could not sync to Google Sheets.</div>`:`<div class="sync-warn">Connect Google Sheets in the Admin tab to save results permanently.</div>`);
-    document.getElementById('result-wrap').innerHTML=`
-      <div class="score-ring ${passed?'':'fail'}"><div class="score-num">${pct}%</div><div class="score-lbl">Score</div></div>
-      <div class="result-title">${passed?'Congratulations!':'Not quite yet'}</div>
-      <div class="result-sub">${correct} of ${total} correct on <strong>${m.title}</strong>.<br>${passed?`You've passed this module — your certificate is ready!`:`You need ${m.passingScore}% to pass. Review the material and try again.`}</div>
-      ${syncMsg}
-      <div class="result-actions">
-        ${passed?`<button class="btn-primary" onclick="showCert('${qz.moduleId}')">View certificate →</button>`:''}
-        <button class="btn-primary" style="${passed?'background:var(--amethyst)':''}" onclick="go('s-dash');renderPath()">Back to learning path</button>
-        ${!passed?`<button class="btn-ghost" onclick="startQuiz('${qz.moduleId}')">Retake quiz</button>`:''}
-        <button class="btn-ghost" onclick="openMod('${qz.moduleId}')">Back to module</button>
-      </div>`;
+
+  // Sync to Google Sheets
+  const user = getUser(STATE.currentUser);
+  syncSheet('QUIZ_RESULT', {
+    username: STATE.currentUser, name: user.name, role: user.role,
+    module: m.title, score: pct, passed, correct, total,
+    timestamp: new Date().toLocaleString()
   });
+
+  const syncMsg = STATE.sheetUrl
+    ? '<div class="sync-ok">✓ Results saved to Google Sheets</div>'
+    : '<div class="sync-warn">Connect Google Sheets in Admin to save results permanently.</div>';
+
+  document.getElementById('res-content').innerHTML = `
+    <div class="score-ring ${passed ? '' : 'fail'}">
+      <div class="score-num">${pct}%</div>
+      <div class="score-lbl">Score</div>
+    </div>
+    <div class="res-title">${passed ? 'Congratulations!' : 'Not quite yet'}</div>
+    <div class="res-sub">
+      ${correct} of ${total} correct on <strong>${m.title}</strong>.<br>
+      ${passed ? "You've passed this module — your certificate is ready!" : `You need ${m.passingScore}% to pass. Review the material and try again.`}
+    </div>
+    ${syncMsg}
+    <div class="res-actions">
+      ${passed ? `<button class="btn btn-plum" onclick="showCert('${qz.moduleId}')">View certificate →</button>` : ''}
+      <button class="btn btn-plum" style="${passed?'background:var(--amethyst)':''}" onclick="go('s-dash');renderPath()">Back to learning path</button>
+      ${!passed ? `<button class="btn btn-ghost" onclick="startQuiz('${qz.moduleId}')">Retake quiz</button>` : ''}
+      <button class="btn btn-ghost" onclick="openMod('${qz.moduleId}')">Back to module</button>
+    </div>`;
   go('s-results');
 }
 
-function renderAdmin(){
-  const users=Object.entries(DB.users);
-  const totalMods=MODULES.length;
-  const totalPassed=users.reduce((s,[,u])=>s+Object.values(u.progress||{}).filter(p=>p.passed).length,0);
-  document.getElementById('admin-stats').innerHTML=`
-    <div class="stat-box"><div class="stat-lbl">Total users</div><div class="stat-val">${users.length}</div></div>
+// ─── ADMIN ────────────────────────────────────────────────────────────────────
+function connectSheet() {
+  const url = document.getElementById('sh-url').value.trim();
+  const err = document.getElementById('sh-err');
+  const ok = document.getElementById('sh-ok');
+  if (!url.includes('script.google.com')) {
+    err.textContent = 'Please enter a valid Apps Script URL.';
+    ok.innerHTML = ''; return;
+  }
+  STATE.sheetUrl = url;
+  localStorage.setItem(SHEET_KEY, url);
+  err.textContent = '';
+  ok.innerHTML = '<div class="conn-pill"><div class="dot-live"></div>Connected to Google Sheets</div>';
+  syncSheet('PING', {});
+  toast('Google Sheets connected!');
+}
+
+function renderAdmin() {
+  const users = loadUsers();
+  const entries = Object.entries(users);
+  const totalMods = MODULES.length;
+  const totalPassed = entries.reduce((s,[,u]) =>
+    s + Object.values(u.progress||{}).filter(p => p.passed).length, 0);
+
+  document.getElementById('admin-stats').innerHTML = `
+    <div class="stat-box"><div class="stat-lbl">Total users</div><div class="stat-val">${entries.length}</div></div>
     <div class="stat-box"><div class="stat-lbl">Modules passed</div><div class="stat-val">${totalPassed}</div></div>
     <div class="stat-box"><div class="stat-lbl">Modules</div><div class="stat-val">${totalMods}</div></div>
-    <div class="stat-box"><div class="stat-lbl">Sheets</div><div class="stat-val" style="font-size:14px;margin-top:10px">${DB.sheetUrl?'<span style="color:var(--jade-dark);font-size:13px;font-weight:600">● On</span>':'<span style="color:var(--text-light);font-size:13px">Off</span>'}</div></div>`;
-  const roleMap={admin:'badge-jade',practitioner:'badge-plum',staff:'badge-amethyst',intern:'badge-gray'};
-  document.getElementById('admin-tbody').innerHTML=users.map(([un,u])=>{
-    const passed=Object.values(u.progress||{}).filter(p=>p.passed).length;
-    const isMe=un===DB.currentUser;
-    return `<tr><td>${u.name}</td><td style="color:var(--text-muted)">${un}</td><td><span class="badge ${roleMap[u.role]||'badge-gray'}">${u.role}</span></td><td style="color:var(--text-muted);font-size:12px">${u.email||'—'}</td><td>${passed}/${totalMods}</td><td style="color:var(--text-muted);font-size:12px">${u.lastLogin||'—'}</td><td>${isMe?'':`<button class="btn-sm btn-sm-red" onclick="deleteUser('${un}')">Delete</button>`}</td></tr>`;
+    <div class="stat-box"><div class="stat-lbl">Sheets</div><div class="stat-val" style="font-size:14px;margin-top:10px">${STATE.sheetUrl ? '<span style="color:var(--jade-dk);font-size:13px;font-weight:600">● On</span>' : '<span style="color:var(--light);font-size:13px">Off</span>'}</div></div>`;
+
+  const rm = {admin:'b-jade',practitioner:'b-plum',staff:'b-ameth',intern:'b-gray'};
+  document.getElementById('admin-tbody').innerHTML = entries.map(([un, u]) => {
+    const passed = Object.values(u.progress||{}).filter(p => p.passed).length;
+    const isMe = un === STATE.currentUser;
+    return `<tr>
+      <td>${u.name}</td>
+      <td style="color:var(--muted)">${un}</td>
+      <td><span class="badge ${rm[u.role]||'b-gray'}">${u.role}</span></td>
+      <td style="color:var(--muted);font-size:12px">${u.email||'—'}</td>
+      <td>${passed}/${totalMods}</td>
+      <td style="color:var(--muted);font-size:12px">${u.lastLogin||'—'}</td>
+      <td>${isMe ? '' : `<button class="btn-sm bs-red" onclick="deleteUser('${un}')">Delete</button>`}</td>
+    </tr>`;
   }).join('');
 }
 
-
-function deleteUser(username){
-  const users=DB.users;
-  if(!users[username])return;
-  if(!confirm(`Delete "${users[username].name}"? This cannot be undone.`))return;
+function deleteUser(username) {
+  const user = getUser(username);
+  if (!user) return;
+  if (!confirm(`Delete "${user.name}" (@${username})? This cannot be undone.`)) return;
+  const users = loadUsers();
   delete users[username];
   saveUsers(users);
-  syncSheet('DELETE_USER',{username});
+  syncSheet('DELETE_USER', {username});
   renderAdmin();
-  toast(`User deleted`);
+  toast('User deleted');
 }
 
-function adminAdd(){
-  const name=document.getElementById('a-name').value.trim();
-  const u=document.getElementById('a-user').value.trim();
-  const pass=document.getElementById('a-pass').value;
-  const role=document.getElementById('a-role').value;
-  const email=(document.getElementById('a-email')||{}).value||'';
-  const sendWelcome=(document.getElementById('a-welcome')||{}).checked;
-  const err=document.getElementById('a-err');
-  if(!name||!u||!pass){err.textContent='All fields required.';return;}
-  const users=DB.users;
-  if(users[u]){err.textContent='Username already exists.';return;}
-  const joined=new Date().toISOString().slice(0,10);
-  users[u]={name,pass,role,email:email.trim(),joined,lastLogin:'',progress:{}};
+function adminAdd() {
+  const name = document.getElementById('a-name').value.trim();
+  const u = document.getElementById('a-user').value.trim();
+  const pass = document.getElementById('a-pass').value;
+  const role = document.getElementById('a-role').value;
+  const email = document.getElementById('a-email').value.trim();
+  const sendWelcome = document.getElementById('a-welcome').checked;
+  const err = document.getElementById('a-err');
+
+  if (!name || !u || !pass) { err.textContent = 'Name, username and password are required.'; return; }
+
+  const users = loadUsers();
+  if (users[u]) { err.textContent = 'That username already exists.'; return; }
+
+  const joined = new Date().toISOString().slice(0,10);
+  users[u] = {name, pass, role, email, joined, lastLogin:'', progress:{}};
   saveUsers(users);
-  err.textContent='';
-  ['a-name','a-user','a-pass','a-email'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  syncSheet('ADD_USER',{username:u,name,role,email:email.trim(),password:pass,joined,sendWelcome:!!(sendWelcome&&email.trim())});
+  err.textContent = '';
+  ['a-name','a-user','a-pass','a-email'].forEach(id => document.getElementById(id).value = '');
+
+  syncSheet('ADD_USER', {
+    username:u, name, role, email, password:pass, joined,
+    sendWelcome: !!(sendWelcome && email)
+  });
+
   renderAdmin();
-  toast(email&&sendWelcome?`User "${name}" added — welcome email sent!`:`User "${name}" added`);
+  toast(email && sendWelcome ? `"${name}" added — welcome email sent!` : `"${name}" added successfully`);
 }
 
-function renderCurriculum(){
-  const mods=MODULES.slice().sort((a,b)=>(a.order[CURRICULUM_ROLE]||99)-(b.order[CURRICULUM_ROLE]||99));
-  document.getElementById('curriculum-list').innerHTML=mods.map((m,i)=>{
-    const assigned=m.roles[CURRICULUM_ROLE];
-    const locked=m.locked[CURRICULUM_ROLE];
-    const ord=m.order[CURRICULUM_ROLE]||99;
-    return `<div class="curr-item" id="ci-${m.id}" style="opacity:${assigned?1:0.5}">
-      <span class="curr-item-drag" title="Drag to reorder">⠿</span>
-      <span class="curr-item-order">${assigned&&ord<99?ord:'—'}</span>
-      <span class="curr-item-icon">${m.icon}</span>
-      <div class="curr-item-info">
-        <div class="curr-item-title">${m.title}</div>
-        <div class="curr-item-sub">${m.questions.length} questions · passing score: ${m.passingScore}%</div>
+// ─── CURRICULUM ───────────────────────────────────────────────────────────────
+function switchCurrRole(role, el) {
+  STATE.currRole = role;
+  document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderCurr();
+}
+
+function renderCurr() {
+  const role = STATE.currRole;
+  const mods = MODULES.slice().sort((a,b) => (a.order[role]||99)-(b.order[role]||99));
+  document.getElementById('curr-list').innerHTML = mods.map((m,i) => {
+    const assigned = m.roles[role];
+    const locked = m.locked[role];
+    const ord = m.order[role] || 99;
+    return `<div class="curr-item" style="opacity:${assigned?1:0.55}">
+      <span class="curr-ord">${assigned && ord < 99 ? ord : '—'}</span>
+      <span style="font-size:20px">${m.icon}</span>
+      <div class="curr-info">
+        <div class="curr-title">${m.title}</div>
+        <div class="curr-sub">${m.questions.length} questions · passing: ${m.passingScore}%</div>
       </div>
-      <div class="curr-item-controls">
-        <label class="lock-toggle" title="Require sequential completion">
-          <input type="checkbox" ${locked?'checked':''} onchange="toggleLock('${m.id}',this.checked)">
-          🔒 Sequential
+      <div class="curr-ctrls">
+        <label class="lock-tog" title="Sequential — must pass previous module first">
+          <input type="checkbox" ${locked?'checked':''} onchange="toggleLock('${m.id}',this.checked)"> 🔒 Sequential
         </label>
-        <label class="toggle-switch" title="Assign to this role">
+        <label class="tog-wrap" title="Assign to this role">
           <input type="checkbox" ${assigned?'checked':''} onchange="toggleAssign('${m.id}',this.checked)">
-          <span class="toggle-slider"></span>
+          <span class="tog-slider"></span>
         </label>
-        <span style="font-size:12px;font-weight:600;color:${assigned?'var(--jade-dark)':'var(--text-light)'}">${assigned?'Assigned':'Off'}</span>
-        ${assigned&&ord>1?`<button class="btn-sm btn-sm-gray" onclick="moveUp('${m.id}')">↑</button>`:''}
-        ${assigned&&ord<mods.filter(x=>x.roles[CURRICULUM_ROLE]).length?`<button class="btn-sm btn-sm-gray" onclick="moveDown('${m.id}')">↓</button>`:''}
+        <span style="font-size:11px;font-weight:600;color:${assigned?'var(--jade-dk)':'var(--light)'}">${assigned?'On':'Off'}</span>
+        ${assigned && ord > 1 ? `<button class="btn-sm bs-gray" onclick="moveUp('${m.id}')">↑</button>` : ''}
+        ${assigned && ord < mods.filter(x=>x.roles[role]).length ? `<button class="btn-sm bs-gray" onclick="moveDown('${m.id}')">↓</button>` : ''}
       </div>
     </div>`;
   }).join('');
 }
 
-function switchCurriculumRole(role,el){
-  CURRICULUM_ROLE=role;
-  document.querySelectorAll('.role-tab').forEach(t=>t.classList.remove('active'));
-  if(el)el.classList.add('active');
-  renderCurriculum();
+function toggleAssign(id, val) {
+  const m = MODULES.find(x => x.id === id);
+  m.roles[STATE.currRole] = val;
+  if (!val) { m.order[STATE.currRole] = 99; }
+  else {
+    const max = Math.max(0, ...MODULES.filter(x => x.id!==id && x.roles[STATE.currRole]).map(x => x.order[STATE.currRole]||0));
+    m.order[STATE.currRole] = max + 1;
+  }
+  renderCurr();
+  toast(val ? `"${m.title}" assigned` : `"${m.title}" removed`);
 }
 
-function toggleAssign(id,val){
-  const m=MODULES.find(x=>x.id===id);
-  m.roles[CURRICULUM_ROLE]=val;
-  if(!val){m.order[CURRICULUM_ROLE]=99;}
-  else{const maxOrd=Math.max(0,...MODULES.filter(x=>x.id!==id&&x.roles[CURRICULUM_ROLE]).map(x=>x.order[CURRICULUM_ROLE]||0));m.order[CURRICULUM_ROLE]=maxOrd+1;}
-  renderCurriculum();toast(val?`"${m.title}" assigned to ${CURRICULUM_ROLE}`:`"${m.title}" removed from ${CURRICULUM_ROLE}`);
+function toggleLock(id, val) {
+  MODULES.find(x => x.id === id).locked[STATE.currRole] = val;
+  toast(val ? 'Sequential lock enabled' : 'Sequential lock disabled');
 }
 
-function toggleLock(id,val){
-  const m=MODULES.find(x=>x.id===id);m.locked[CURRICULUM_ROLE]=val;
-  toast(val?'Sequential lock enabled':'Sequential lock disabled');
+function moveUp(id) {
+  const m = MODULES.find(x => x.id === id);
+  const cur = m.order[STATE.currRole];
+  const prev = MODULES.find(x => x.id!==id && x.roles[STATE.currRole] && x.order[STATE.currRole]===cur-1);
+  if (prev) { prev.order[STATE.currRole]=cur; m.order[STATE.currRole]=cur-1; }
+  renderCurr();
 }
 
-function moveUp(id){
-  const m=MODULES.find(x=>x.id===id);
-  const cur=m.order[CURRICULUM_ROLE];
-  const prev=MODULES.find(x=>x.id!==id&&x.roles[CURRICULUM_ROLE]&&x.order[CURRICULUM_ROLE]===cur-1);
-  if(prev){prev.order[CURRICULUM_ROLE]=cur;m.order[CURRICULUM_ROLE]=cur-1;}
-  renderCurriculum();
+function moveDown(id) {
+  const m = MODULES.find(x => x.id === id);
+  const cur = m.order[STATE.currRole];
+  const next = MODULES.find(x => x.id!==id && x.roles[STATE.currRole] && x.order[STATE.currRole]===cur+1);
+  if (next) { next.order[STATE.currRole]=cur; m.order[STATE.currRole]=cur+1; }
+  renderCurr();
 }
 
-function moveDown(id){
-  const m=MODULES.find(x=>x.id===id);
-  const cur=m.order[CURRICULUM_ROLE];
-  const next=MODULES.find(x=>x.id!==id&&x.roles[CURRICULUM_ROLE]&&x.order[CURRICULUM_ROLE]===cur+1);
-  if(next){next.order[CURRICULUM_ROLE]=cur;m.order[CURRICULUM_ROLE]=cur+1;}
-  renderCurriculum();
+// ─── CONTENT EDITOR ──────────────────────────────────────────────────────────
+function renderContentEditor() {
+  document.getElementById('content-list').innerHTML = MODULES.map((m,mi) => buildMEC(m,mi)).join('');
 }
 
-function renderContentEditor(){
-  document.getElementById('content-editor-list').innerHTML=MODULES.map((m,mi)=>buildMEC(m,mi)).join('');
-}
-
-function buildMEC(m,mi){
-  const resHTML=m.resources.map((r,ri)=>`
+function buildMEC(m, mi) {
+  const resHTML = m.resources.map((r,ri) => `
     <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
       <input type="text" value="${r.icon}" style="width:44px;text-align:center;padding:8px 4px;font-size:16px" onchange="MODULES[${mi}].resources[${ri}].icon=this.value"/>
       <input type="text" value="${r.name.replace(/"/g,'&quot;')}" style="flex:1" placeholder="Resource name" onchange="MODULES[${mi}].resources[${ri}].name=this.value"/>
       <input type="text" value="${r.type}" style="width:110px" placeholder="Type" onchange="MODULES[${mi}].resources[${ri}].type=this.value"/>
       <input type="text" value="${r.url}" style="flex:1" placeholder="Download URL" onchange="MODULES[${mi}].resources[${ri}].url=this.value"/>
-      <button class="btn-sm btn-sm-red" onclick="delRes(${mi},${ri})">Remove</button>
+      <button class="btn-sm bs-red" onclick="delRes(${mi},${ri})">Remove</button>
     </div>`).join('');
-  const qHTML=m.questions.map((q,qi)=>buildQCard(m,mi,q,qi)).join('');
-  return `<div class="module-editor-card">
-    <div class="mec-header" onclick="toggleMEC(${mi})">
+
+  const qHTML = m.questions.map((q,qi) => buildQCard(mi,q,qi)).join('');
+
+  return `<div class="mec">
+    <div class="mec-hdr" onclick="toggleMEC(${mi})">
       <span style="font-size:18px">${m.icon}</span>
       <span style="font-size:14px;font-weight:600;color:var(--plum)">${m.title}</span>
-      <span style="font-size:11px;color:var(--text-muted);margin-left:6px">${m.questions.length} questions</span>
-      <span class="chevron" id="chev-${mi}">▼</span>
+      <span style="font-size:11px;color:var(--muted);margin-left:6px">${m.questions.length} questions</span>
+      <span class="chev" id="chev-${mi}">▼</span>
     </div>
     <div class="mec-body" id="meb-${mi}">
-      <p class="section-label">Module info</p>
+      <p class="sec-lbl">Module info</p>
       <div class="form-row" style="margin-bottom:12px">
         <div class="field"><label>Title</label><input type="text" id="mt-${mi}" value="${m.title.replace(/"/g,'&quot;')}"/></div>
-        <div class="field"><label>Icon</label><input type="text" id="mi2-${mi}" value="${m.icon}"/></div>
+        <div class="field"><label>Icon (emoji)</label><input type="text" id="mi-${mi}" value="${m.icon}"/></div>
       </div>
       <div class="field"><label>Description</label><textarea id="md-${mi}">${m.desc}</textarea></div>
       <div class="form-row">
@@ -1136,148 +1240,198 @@ function buildMEC(m,mi){
         <div class="field"><label>Passing score (%)</label><input type="number" id="mps-${mi}" value="${m.passingScore}" min="50" max="100"/></div>
       </div>
       <div class="divider"></div>
-      <p class="section-label">Resources</p>
+      <p class="sec-lbl">Resources</p>
       <div id="res-list-${mi}">${resHTML}</div>
-      <button class="btn-sm btn-sm-gray" style="margin-bottom:1.25rem" onclick="addRes(${mi})">+ Add resource</button>
+      <button class="btn-sm bs-gray" style="margin-bottom:1.25rem" onclick="addRes(${mi})">+ Add resource</button>
       <div class="divider"></div>
-      <p class="section-label">Quiz questions &nbsp;<span style="font-weight:400;color:var(--text-muted);text-transform:none;letter-spacing:0">Select the correct answer radio button</span></p>
+      <p class="sec-lbl">Quiz questions &nbsp;<span style="font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0">Select the radio button next to the correct answer</span></p>
       <div id="q-list-${mi}">${qHTML}</div>
-      <button class="btn-sm btn-sm-gray" style="margin-bottom:1.5rem" onclick="addQ(${mi})">+ Add question</button>
+      <button class="btn-sm bs-gray" style="margin-bottom:1.5rem" onclick="addQ(${mi})">+ Add question</button>
       <div style="display:flex;gap:10px;padding-top:1rem;border-top:1px solid var(--border)">
-        <button class="btn-sm btn-sm-plum" onclick="saveMod(${mi})">Save module</button>
-        <button class="btn-sm btn-sm-red" onclick="delMod(${mi})">Delete module</button>
+        <button class="btn-sm bs-plum" onclick="saveMod(${mi})">Save module</button>
+        <button class="btn-sm bs-red" onclick="delMod(${mi})">Delete module</button>
       </div>
     </div>
   </div>`;
 }
 
-function buildQCard(m,mi,q,qi){
-  const letters=['A','B','C','D'];
-  const opts=(q.opts&&q.opts.length===4)?q.opts:['','','',''];
-  const optRows=opts.map((o,oi)=>`
+function buildQCard(mi, q, qi) {
+  const L = ['A','B','C','D'];
+  const opts = (q.opts && q.opts.length===4) ? q.opts : ['','','',''];
+  const rows = opts.map((o,oi) => `
     <div class="opt-row">
-      <span class="opt-lbl-sm">${letters[oi]}</span>
+      <span class="opt-lbl">${L[oi]}</span>
       <input type="radio" name="ans-${mi}-${qi}" value="${oi}" ${q.ans===oi?'checked':''} onchange="MODULES[${mi}].questions[${qi}].ans=${oi}"/>
-      <input type="text" value="${o.replace(/"/g,'&quot;')}" placeholder="Option ${letters[oi]}" onchange="MODULES[${mi}].questions[${qi}].opts[${oi}]=this.value"/>
+      <input type="text" value="${o.replace(/"/g,'&quot;')}" placeholder="Option ${L[oi]}" onchange="MODULES[${mi}].questions[${qi}].opts[${oi}]=this.value"/>
     </div>`).join('');
-  return `<div class="question-card" id="qc-${mi}-${qi}">
-    <div class="qc-header"><span class="qc-num">Question ${qi+1}</span><button class="btn-sm btn-sm-red" onclick="delQ(${mi},${qi})">Delete</button></div>
-    <div class="field"><label>Question text</label><textarea onchange="MODULES[${mi}].questions[${qi}].q=this.value">${q.q||''}</textarea></div>
-    <p style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px">Answer options — select correct</p>
-    ${optRows}
-    <div class="field" style="margin-top:12px"><label>Feedback after answering</label><textarea onchange="MODULES[${mi}].questions[${qi}].fb=this.value">${q.fb||''}</textarea></div>
+  return `<div class="q-ec" id="qc-${mi}-${qi}">
+    <div class="q-ec-hdr">
+      <span class="q-ec-num">Question ${qi+1}</span>
+      <button class="btn-sm bs-red" onclick="delQ(${mi},${qi})">Delete</button>
+    </div>
+    <div class="field"><label>Question text</label>
+      <textarea onchange="MODULES[${mi}].questions[${qi}].q=this.value">${q.q||''}</textarea></div>
+    <p style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Answer options — click radio next to correct answer</p>
+    ${rows}
+    <div class="field" style="margin-top:12px"><label>Feedback after answering</label>
+      <textarea onchange="MODULES[${mi}].questions[${qi}].fb=this.value">${q.fb||''}</textarea></div>
   </div>`;
 }
 
-function toggleMEC(mi){
-  const body=document.getElementById('meb-'+mi);const chev=document.getElementById('chev-'+mi);
-  const open=body.classList.toggle('open');chev.classList.toggle('open',open);
+function toggleMEC(mi) {
+  const b = document.getElementById('meb-'+mi);
+  const c = document.getElementById('chev-'+mi);
+  const open = b.classList.toggle('open');
+  c.classList.toggle('open', open);
 }
 
-function saveMod(mi){
-  const t=document.getElementById('mt-'+mi);
-  if(t){
-    MODULES[mi].title=t.value.trim()||MODULES[mi].title;
-    MODULES[mi].icon=document.getElementById('mi2-'+mi).value.trim()||MODULES[mi].icon;
-    MODULES[mi].desc=document.getElementById('md-'+mi).value.trim()||MODULES[mi].desc;
-    MODULES[mi].videoId=document.getElementById('mv-'+mi).value.trim();
-    MODULES[mi].passingScore=parseInt(document.getElementById('mps-'+mi).value)||80;
+function saveMod(mi) {
+  const t = document.getElementById('mt-'+mi);
+  if (t) {
+    MODULES[mi].title = t.value.trim() || MODULES[mi].title;
+    MODULES[mi].icon = document.getElementById('mi-'+mi).value.trim() || MODULES[mi].icon;
+    MODULES[mi].desc = document.getElementById('md-'+mi).value.trim() || MODULES[mi].desc;
+    MODULES[mi].videoId = document.getElementById('mv-'+mi).value.trim();
+    MODULES[mi].passingScore = parseInt(document.getElementById('mps-'+mi).value) || 80;
   }
-  renderPath();toast('Module saved!');
+  renderPath();
+  toast('Module saved!');
 }
 
-function delMod(mi){
-  if(!confirm(`Delete "${MODULES[mi].title}"?`))return;
-  MODULES.splice(mi,1);renderContentEditor();renderPath();toast('Module deleted');
+function delMod(mi) {
+  if (!confirm(`Delete "${MODULES[mi].title}"? This cannot be undone.`)) return;
+  MODULES.splice(mi, 1);
+  renderContentEditor();
+  renderPath();
+  toast('Module deleted');
 }
 
-function addQ(mi){
-  MODULES[mi].questions.push({q:'',opts:['','','',''],ans:0,fb:''});
-  const qi=MODULES[mi].questions.length-1;
-  const container=document.getElementById('q-list-'+mi);
-  const div=document.createElement('div');
-  div.innerHTML=buildQCard(MODULES[mi],mi,MODULES[mi].questions[qi],qi);
+function addQ(mi) {
+  MODULES[mi].questions.push({q:'', opts:['','','',''], ans:0, fb:''});
+  const qi = MODULES[mi].questions.length - 1;
+  const container = document.getElementById('q-list-'+mi);
+  const div = document.createElement('div');
+  div.innerHTML = buildQCard(mi, MODULES[mi].questions[qi], qi);
   container.appendChild(div.firstElementChild);
   toast('Question added');
 }
 
-function delQ(mi,qi){
-  if(!confirm('Delete this question?'))return;
-  MODULES[mi].questions.splice(qi,1);
-  document.getElementById('q-list-'+mi).innerHTML=MODULES[mi].questions.map((q,i)=>buildQCard(MODULES[mi],mi,q,i)).join('');
+function delQ(mi, qi) {
+  if (!confirm('Delete this question?')) return;
+  MODULES[mi].questions.splice(qi, 1);
+  document.getElementById('q-list-'+mi).innerHTML =
+    MODULES[mi].questions.map((q,i) => buildQCard(mi, q, i)).join('');
   toast('Question deleted');
 }
 
-function addRes(mi){MODULES[mi].resources.push({name:'',type:'PDF',icon:'📄',url:''});renderContentEditor();}
-function delRes(mi,ri){MODULES[mi].resources.splice(ri,1);renderContentEditor();}
-
-function addNewModule(){
-  const title=document.getElementById('nm-title').value.trim();
-  const icon=document.getElementById('nm-icon').value.trim()||'📚';
-  const desc=document.getElementById('nm-desc').value.trim();
-  const videoId=document.getElementById('nm-video').value.trim();
-  const iconBg=document.getElementById('nm-color').value;
-  const err=document.getElementById('nm-err');
-  if(!title||!desc){err.textContent='Title and description required.';return;}
-  const id='mod_'+Date.now();
-  const roles={practitioner:document.getElementById('nm-r-prac').checked,staff:document.getElementById('nm-r-staff').checked,intern:document.getElementById('nm-r-intern').checked};
-  const maxOrd={practitioner:Math.max(0,...MODULES.filter(m=>m.roles.practitioner).map(m=>m.order.practitioner||0)),staff:Math.max(0,...MODULES.filter(m=>m.roles.staff).map(m=>m.order.staff||0)),intern:Math.max(0,...MODULES.filter(m=>m.roles.intern).map(m=>m.order.intern||0))};
-  const order={practitioner:roles.practitioner?maxOrd.practitioner+1:99,staff:roles.staff?maxOrd.staff+1:99,intern:roles.intern?maxOrd.intern+1:99};
-  MODULES.push({id,title,icon,iconBg,desc,videoId,passingScore:80,roles,order,locked:{practitioner:true,staff:true,intern:true},resources:[],questions:[]});
-  err.textContent='';['nm-title','nm-icon','nm-desc','nm-video'].forEach(i=>document.getElementById(i).value='');
-  renderContentEditor();renderPath();renderCurriculum();
-  toast(`Module "${title}" added!`);
+function addRes(mi) {
+  MODULES[mi].resources.push({name:'', type:'PDF', icon:'📄', url:''});
+  renderContentEditor();
 }
 
-
-async function importFromSheet(){
-  const statusEl=document.getElementById('import-status');
-  if(!DB.sheetUrl){
-    statusEl.style.display='block';statusEl.style.background='#fdf0f4';statusEl.style.color='#8b2252';
-    statusEl.textContent='Connect Google Sheets first in the Users tab.';return;
-  }
-  statusEl.style.display='block';statusEl.style.background='#ede8f2';statusEl.style.color='var(--amethyst)';
-  statusEl.textContent='Fetching questions from Question Bank tab...';
-  try{
-    const res=await fetch(DB.sheetUrl+'?action=GET_QUESTIONS&t='+Date.now());
-    const data=await res.json();
-    if(data.status!=='ok'||!data.questions||!data.questions.length){
-      statusEl.style.background='#fdf0f4';statusEl.style.color='#8b2252';
-      statusEl.textContent='No questions found. Check your Question Bank tab has data with correct module names.';return;
-    }
-    let imported=0,skipped=0;
-    data.questions.forEach(q=>{
-      const m=MODULES.find(x=>x.id===q.moduleId||x.title.toLowerCase()===q.moduleName.toLowerCase());
-      if(!m){skipped++;return;}
-      if(!m.questions.some(eq=>eq.q===q.q)){m.questions.push({q:q.q,opts:q.opts,ans:q.ans,fb:q.fb});imported++;}
-      else skipped++;
-    });
-    renderContentEditor();renderPath();
-    statusEl.style.background='#f0f2e8';statusEl.style.color='var(--jade-dark)';
-    statusEl.textContent=`Imported ${imported} new question${imported!==1?'s':''}!${skipped?' ('+skipped+' skipped — already exist or module not matched)':''}`;
-    if(imported>0)toast(`${imported} question${imported!==1?'s':''} imported!`);
-  }catch(err){
-    statusEl.style.background='#fdf0f4';statusEl.style.color='#8b2252';
-    statusEl.textContent='Error connecting to Google Sheets. Make sure you have deployed the latest Apps Script.';
-  }
+function delRes(mi, ri) {
+  MODULES[mi].resources.splice(ri, 1);
+  renderContentEditor();
 }
 
-function exportContent(){
-  MODULES.forEach((m,mi)=>{
-    const t=document.getElementById('mt-'+mi);
-    if(t){m.title=t.value.trim()||m.title;m.icon=document.getElementById('mi2-'+mi).value.trim()||m.icon;m.desc=document.getElementById('md-'+mi).value.trim()||m.desc;m.videoId=document.getElementById('mv-'+mi).value.trim();m.passingScore=parseInt(document.getElementById('mps-'+mi).value)||80;}
+function addNewModule() {
+  const title = document.getElementById('nm-title').value.trim();
+  const icon = document.getElementById('nm-icon').value.trim() || '📚';
+  const desc = document.getElementById('nm-desc').value.trim();
+  const videoId = document.getElementById('nm-vid').value.trim();
+  const iconBg = document.getElementById('nm-color').value;
+  const err = document.getElementById('nm-err');
+  if (!title || !desc) { err.textContent = 'Title and description are required.'; return; }
+
+  const roles = {
+    practitioner: document.getElementById('nm-prac').checked,
+    staff: document.getElementById('nm-staff').checked,
+    intern: document.getElementById('nm-intern').checked
+  };
+  const getMax = r => Math.max(0, ...MODULES.filter(m => m.roles[r]).map(m => m.order[r]||0));
+  const order = {
+    practitioner: roles.practitioner ? getMax('practitioner')+1 : 99,
+    staff: roles.staff ? getMax('staff')+1 : 99,
+    intern: roles.intern ? getMax('intern')+1 : 99
+  };
+
+  MODULES.push({
+    id: 'mod_'+Date.now(), title, icon, iconBg, desc, videoId,
+    passingScore: 80, roles, order,
+    locked: {practitioner:true, staff:true, intern:true},
+    resources: [], questions: []
   });
-  const modulesJSON=JSON.stringify(MODULES,null,2);
-  let html=document.documentElement.outerHTML;
-  html=html.replace(/let MODULES=\[[\s\S]*?\];/,'let MODULES='+modulesJSON+';');
-  const blob=new Blob([html],{type:'text/html'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='index.html';a.click();
-  URL.revokeObjectURL(a.href);
-  toast('index.html downloaded — upload to GitHub to publish!');
+  err.textContent = '';
+  ['nm-title','nm-icon','nm-desc','nm-vid'].forEach(id => document.getElementById(id).value = '');
+  renderContentEditor();
+  renderPath();
+  renderCurr();
+  toast(`"${title}" added!`);
 }
 
-// Init
-document.addEventListener('DOMContentLoaded',()=>{injectLogos();});
+async function importFromSheet() {
+  const st = document.getElementById('import-status');
+  if (!STATE.sheetUrl) {
+    st.style.display='block'; st.style.background='#fdf0f4'; st.style.color='#8b2252';
+    st.textContent='Connect Google Sheets first in the Users tab.'; return;
+  }
+  st.style.display='block'; st.style.background='#ede8f2'; st.style.color='var(--amethyst)';
+  st.textContent='Fetching questions from Question Bank tab...';
+  try {
+    const res = await fetch(STATE.sheetUrl + '?action=GET_QUESTIONS&t=' + Date.now());
+    const data = await res.json();
+    if (data.status !== 'ok' || !data.questions || !data.questions.length) {
+      st.style.background='#fdf0f4'; st.style.color='#8b2252';
+      st.textContent='No questions found. Check your Question Bank tab has data with correct module names.'; return;
+    }
+    let imported=0, skipped=0;
+    data.questions.forEach(q => {
+      const m = MODULES.find(x =>
+        x.id === q.moduleId ||
+        x.title.toLowerCase() === q.moduleName.toLowerCase()
+      );
+      if (!m) { skipped++; return; }
+      if (!m.questions.some(eq => eq.q === q.q)) {
+        m.questions.push({q:q.q, opts:q.opts, ans:q.ans, fb:q.fb});
+        imported++;
+      } else skipped++;
+    });
+    renderContentEditor(); renderPath();
+    st.style.background='#f0f2e8'; st.style.color='var(--jade-dk)';
+    st.textContent = `Imported ${imported} new question${imported!==1?'s':''}!${skipped?' ('+skipped+' already existed or module not matched)':''}`;
+    if (imported > 0) toast(imported + ' question' + (imported!==1?'s':'') + ' imported!');
+  } catch(e) {
+    st.style.background='#fdf0f4'; st.style.color='#8b2252';
+    st.textContent='Error connecting to Google Sheets. Make sure the Apps Script is deployed with the latest code.';
+  }
+}
+
+function exportContent() {
+  // Save any open editor fields first
+  MODULES.forEach((m,mi) => {
+    const t = document.getElementById('mt-'+mi);
+    if (t) {
+      m.title = t.value.trim() || m.title;
+      m.icon = (document.getElementById('mi-'+mi)||{}).value || m.icon;
+      m.desc = (document.getElementById('md-'+mi)||{}).value || m.desc;
+      m.videoId = (document.getElementById('mv-'+mi)||{}).value || m.videoId;
+      m.passingScore = parseInt((document.getElementById('mps-'+mi)||{}).value) || m.passingScore;
+    }
+  });
+  const json = JSON.stringify(MODULES, null, 2);
+  let html = document.documentElement.outerHTML;
+  html = html.replace(/let MODULES = \[[\s\S]*?\];/, 'let MODULES = ' + json + ';');
+  const blob = new Blob([html], {type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'index.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('index.html downloaded! Upload to GitHub to publish.');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+initAdmin();
 </script>
 </body>
 </html>
