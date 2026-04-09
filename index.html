@@ -821,6 +821,7 @@ function loadDash() {
   if (sheetUrl) {
     document.getElementById('sh-url').value = sheetUrl;
     document.getElementById('sh-ok').innerHTML = '<div class="conn-pill"><div class="dot-live"></div>Connected to Google Sheets</div>';
+    document.getElementById('sh-err').textContent = '';
   }
 
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -847,7 +848,14 @@ function switchTab(tab, el) {
   if (tab === 'certs') renderCerts();
   if (tab === 'admin') renderAdmin();
   if (tab === 'curr') renderCurr();
-  if (tab === 'content') renderContentEditor();
+  if (tab === 'content') {
+    renderContentEditor();
+    // If sheet is connected, make sure import button works (clear any stale error)
+    const st = document.getElementById('import-status');
+    if (getSheetUrl() && st.textContent.includes('Connect Google Sheets first')) {
+      st.style.display = 'none';
+    }
+  }
 }
 
 // ─── LEARNING PATH ────────────────────────────────────────────────────────────
@@ -1316,6 +1324,12 @@ function moveDown(id) {
 
 // ─── CONTENT EDITOR ──────────────────────────────────────────────────────────
 function renderContentEditor() {
+  // Show connection status
+  const sheetUrl = getSheetUrl();
+  const st = document.getElementById('import-status');
+  if (sheetUrl) {
+    st.style.display = 'none'; // Clear any previous error
+  }
   document.getElementById('content-list').innerHTML = MODULES.map((m,mi) => buildMEC(m,mi)).join('');
 }
 
@@ -1481,14 +1495,14 @@ function addNewModule() {
 
 async function importFromSheet() {
   const st = document.getElementById('import-status');
-  if (!STATE.sheetUrl) {
+  const sheetUrl2 = getSheetUrl();
+  if (!sheetUrl2) {
     st.style.display='block'; st.style.background='#fdf0f4'; st.style.color='#8b2252';
     st.textContent='Connect Google Sheets first in the Users tab.'; return;
   }
   st.style.display='block'; st.style.background='#ede8f2'; st.style.color='var(--amethyst)';
   st.textContent='Fetching questions from Question Bank tab...';
   try {
-    const sheetUrl2 = getSheetUrl();
     const res = await fetch(sheetUrl2 + '?action=GET_QUESTIONS&t=' + Date.now());
     const data = await res.json();
     if (data.status !== 'ok' || !data.questions || !data.questions.length) {
