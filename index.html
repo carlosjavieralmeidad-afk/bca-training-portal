@@ -435,7 +435,7 @@ input:checked + .toggle-slider:before{transform:translateX(18px);}
         <div class="admin-card-title">All users</div>
         <div style="overflow-x:auto">
         <table class="tbl">
-          <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Modules passed</th><th>Last login</th></tr></thead>
+          <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Email</th><th>Modules passed</th><th>Last login</th></tr></thead>
           <tbody id="admin-tbody"></tbody>
         </table>
         </div>
@@ -448,6 +448,11 @@ input:checked + .toggle-slider:before{transform:translateX(18px);}
           <div class="form-row">
             <div class="field"><label>Role</label><select id="a-role"><option value="practitioner">Practitioner</option><option value="staff">Front Office Staff</option><option value="intern">Intern</option><option value="admin">Admin</option></select></div>
             <div class="field"><label>Password</label><input type="password" id="a-pass" placeholder="Temporary password"/></div>
+          </div>
+          <div class="field"><label>Email address <span style="font-weight:400;color:var(--text-muted);text-transform:none;letter-spacing:0">(optional — used to send welcome email)</span></label><input type="email" id="a-email" placeholder="practitioner@email.com"/></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:4px;margin-bottom:8px">
+            <input type="checkbox" id="a-send-email" checked style="width:16px;height:16px;accent-color:var(--plum);cursor:pointer"/>
+            <label for="a-send-email" style="font-size:13px;color:var(--text-muted);cursor:pointer;text-transform:none;letter-spacing:0">Send welcome email with login credentials</label>
           </div>
           <div class="err" id="a-err"></div>
           <button class="add-btn" onclick="adminAdd()">Add user</button>
@@ -966,7 +971,7 @@ function renderAdmin(){
   const roleMap={admin:'badge-jade',practitioner:'badge-plum',staff:'badge-amethyst',intern:'badge-gray'};
   document.getElementById('admin-tbody').innerHTML=users.map(([un,u])=>{
     const passed=Object.values(u.progress||{}).filter(p=>p.passed).length;
-    return `<tr><td>${u.name}</td><td style="color:var(--text-muted)">${un}</td><td><span class="badge ${roleMap[u.role]||'badge-gray'}">${u.role}</span></td><td>${passed}/${totalMods}</td><td style="color:var(--text-muted);font-size:12px">${u.lastLogin||'—'}</td></tr>`;
+    return `<tr><td>${u.name}</td><td style="color:var(--text-muted)">${un}</td><td><span class="badge ${roleMap[u.role]||'badge-gray'}">${u.role}</span></td><td style="color:var(--text-muted);font-size:12px">${u.email||'—'}</td><td>${passed}/${totalMods}</td><td style="color:var(--text-muted);font-size:12px">${u.lastLogin||'—'}</td></tr>`;
   }).join('');
 }
 
@@ -975,13 +980,21 @@ function adminAdd(){
   const u=document.getElementById('a-user').value.trim();
   const pass=document.getElementById('a-pass').value;
   const role=document.getElementById('a-role').value;
+  const email=document.getElementById('a-email').value.trim();
+  const sendEmail=document.getElementById('a-send-email').checked;
   const err=document.getElementById('a-err');
   if(!name||!u||!pass){err.textContent='All fields required.';return;}
   if(DB.users[u]){err.textContent='Username already exists.';return;}
-  DB.users[u]={name,pass,role,joined:new Date().toISOString().slice(0,10),lastLogin:'',progress:{}};
-  err.textContent='';['a-name','a-user','a-pass'].forEach(id=>document.getElementById(id).value='');
-  syncSheet('ADD_USER',{username:u,name,role,joined:DB.users[u].joined});
-  renderAdmin();toast(`User "${name}" added`);
+  DB.users[u]={name,pass,role,email,joined:new Date().toISOString().slice(0,10),lastLogin:'',progress:{}};
+  err.textContent='';
+  ['a-name','a-user','a-pass','a-email'].forEach(id=>document.getElementById(id).value='');
+  syncSheet('ADD_USER',{username:u,name,role,email,password:pass,joined:DB.users[u].joined,sendWelcome:sendEmail&&!!email});
+  renderAdmin();
+  if(email&&sendEmail){
+    toast(`User "${name}" added — welcome email sent to ${email}!`);
+  } else {
+    toast(`User "${name}" added successfully`);
+  }
 }
 
 function renderCurriculum(){
