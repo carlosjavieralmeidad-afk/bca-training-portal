@@ -680,7 +680,7 @@ function injectLogos(){
 async function loadProgressFromSheet(username){
   if(!DB.sheetUrl)return;
   try{
-    const res=await fetch(DB.sheetUrl,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'GET_PROGRESS',username})});
+    const res=await fetch(DB.sheetUrl+'?action=GET_PROGRESS&username='+encodeURIComponent(username));
     const data=await res.json();
     if(data.status==='ok'&&data.progress){
       if(DB.users[username])DB.users[username].progress=data.progress;
@@ -698,7 +698,7 @@ async function saveProgressToSheet(username){
 async function loadAllUsersFromSheet(){
   if(!DB.sheetUrl)return;
   try{
-    const res=await fetch(DB.sheetUrl,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'GET_ALL_USERS'})});
+    const res=await fetch(DB.sheetUrl+'?action=GET_ALL_USERS');
     const data=await res.json();
     if(data.status==='ok'&&data.users){
       data.users.forEach(u=>{
@@ -750,42 +750,41 @@ async function doLogin(){
   const err=document.getElementById('l-err');
   const btn=document.querySelector('#s-login .btn-primary');
   if(!u||!p){err.textContent='Please enter username and password.';return;}
-  
+  err.textContent='';
+
+  // Always allow local admin login first (no sheet needed)
+  seedLocalAdmin();
+  if(DB.users[u]&&DB.users[u].pass===p){
+    DB.users[u].lastLogin=new Date().toLocaleString();
+    DB.currentUser=u;
+    loadDash();
+    return;
+  }
+
   // If sheet connected, verify against Google Sheets
   if(DB.sheetUrl){
-    err.textContent='';
     btn.textContent='Signing in...';btn.disabled=true;
     try {
-      const res=await fetch(DB.sheetUrl,{method:'POST',mode:'cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'LOGIN',username:u,password:p})});
+      const res=await fetch(DB.sheetUrl+'?action=LOGIN&username='+encodeURIComponent(u)+'&password='+encodeURIComponent(p));
       const data=await res.json();
-      btn.textContent='Sign in';btn.disabled=false;
+      btn.textContent='SIGN IN';btn.disabled=false;
       if(data.status==='ok'){
-        DB.users[u]={name:data.user.name,pass:p,role:data.user.role,email:data.user.email||'',joined:data.user.joined,lastLogin:new Date().toLocaleString(),progress:{}};
+        DB.users[u]={name:data.user.name,pass:p,role:data.user.role,email:data.user.email||'',joined:data.user.joined,lastLogin:new Date().toLocaleString(),progress:data.user.progress||{}};
         DB.currentUser=u;
-        // Load progress from sheets
-        await loadProgressFromSheet(u);
         loadDash();
-      } else if(data.status==='invalid'){
-        err.textContent='Invalid username or password.';
+        return;
       } else {
-        err.textContent='Connection error. Please try again.';
+        err.textContent='Invalid username or password.';
+        return;
       }
     } catch(e){
-      btn.textContent='Sign in';btn.disabled=false;
-      // Fallback to local if fetch fails
-      seedLocalAdmin();
-      const user=DB.users[u];
-      if(!user||user.pass!==p){err.textContent='Invalid username or password.';return;}
-      DB.currentUser=u;loadDash();
+      btn.textContent='SIGN IN';btn.disabled=false;
+      err.textContent='Could not connect to server. Please check your connection.';
+      return;
     }
-  } else {
-    // No sheet — local only
-    seedLocalAdmin();
-    const user=DB.users[u];
-    if(!user||user.pass!==p){err.textContent='Invalid username or password.';return;}
-    err.textContent='';user.lastLogin=new Date().toLocaleString();DB.currentUser=u;
-    loadDash();
   }
+
+  err.textContent='Invalid username or password.';
 }
 
 async function doRegister(){
