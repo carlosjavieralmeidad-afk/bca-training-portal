@@ -644,12 +644,13 @@ let MODULES = [
 
 const SHEET_KEY = 'bca_sheet_url';
 const SESSION_KEY = 'bca_session';
+const DEFAULT_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzmaAkIJfXLjbI92YgLfMCMDqCgM_shvlHQjwPh9Xz9BNihSUH1tAsajBsX8FJKRuvG6w/exec';
 
 // In-memory user cache for current session
 let _userCache = {};
 
 function getSheetUrl() {
-  return localStorage.getItem(SHEET_KEY) || '';
+  return localStorage.getItem(SHEET_KEY) || DEFAULT_SHEET_URL;
 }
 
 function setSheetUrl(url) {
@@ -745,7 +746,7 @@ async function doLogin() {
   // ── STEP 2: Check Google Sheets ──
   const sheetUrl = getSheetUrl();
   if (!sheetUrl) {
-    err.textContent = 'No Google Sheets connected. Only admin can log in until Sheets is configured.';
+    err.textContent = 'Connection error. Please try again.';
     return;
   }
 
